@@ -1,5 +1,3 @@
-
-
 var comprarComida = $('#comprarComida')
 chrome.storage.local.get('comprarComida', function (result) {
     comprarComida[0].checked = result.comprarComida
@@ -22,7 +20,6 @@ configuracoes.addEventListener('change', function (event) {
         tabUrl = tabs[0].url;
         console.log("_________ Configurações Tab: " + tabId + " _________")
         console.log(tabs[0])
-
 
         arrayConfiguracoes = [{
             tabId: tabId,
@@ -53,7 +50,6 @@ configuracoes.addEventListener('change', function (event) {
         var keyload = {}
         keyload[tabId] = tabId.toString()
         chrome.storage.local.get(keyload[tabId], function (result) { console.log(result) })
-
     })
 })
 
@@ -74,9 +70,4 @@ chrome.storage.local.get('configuracoes', function (result) {
     tipoMasmorra[0].checked = result.configuracoes[0].tipoMasmorra
     bonusBoss[0].checked = result.configuracoes[0].bonusBoss
     comprarComida[0].checked = result.configuracoes[0].comprarComida
-
 })
-
-
-
-

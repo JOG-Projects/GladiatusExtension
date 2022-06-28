@@ -1,15 +1,12 @@
-
-
-// Fazer função para vereificar se ainda tem food na bag.
+// Fazer função para verificar se ainda tem food na bag.
 // Melhorar função de compra, por para ver o tempo
 // Se acabar a food e não tiver para comprar, ficar tentando comprar e não fazer mais batalhas
-
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function foodLogic(foodData) {
     var missingHp = $("#header_values_hp_bar").attr("data-max-value") - $("#header_values_hp_bar").attr("data-value");
     var minPos = null;
-    var minVal = 99999;
+    var minVal = Number.MIN_VALUE;
     foodData[0].forEach(function (item) {
         var diff = item - missingHp;
         if (diff < minVal && diff < 0) {
