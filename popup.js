@@ -200,40 +200,16 @@ var tipoAtaqueExpedicao = $('#tipoAtaqueExpedicao')
 chrome.storage.local.get('tipoAtaqueExpedicao', function (result) {
     tipoAtaqueExpedicao[0].value = result.tipoAtaqueExpedicao
 
-    if (result.tipoAtaqueExpedicao == 0) {
-        $('#tipoAtaqueExpedicao')[0][0].selected = true
-    }
-    else {
-        $('#tipoAtaqueExpedicao')[0][0].selected = false
-    }
+    $('#tipoAtaqueExpedicao')[0][0].selected = result.tipoAtaqueExpedicao == 0
 
-    if (result.tipoAtaqueExpedicao == 1) {
-        $('#tipoAtaqueExpedicao')[0][1].selected = true
-    }
-    else {
-        $('#tipoAtaqueExpedicao')[0][1].selected = false
-    }
+    $('#tipoAtaqueExpedicao')[0][1].selected = result.tipoAtaqueExpedicao == 1
 
-    if (result.tipoAtaqueExpedicao == 2) {
-        $('#tipoAtaqueExpedicao')[0][2].selected = true
-    }
-    else {
-        $('#tipoAtaqueExpedicao')[0][2].selected = false
-    }
+    $('#tipoAtaqueExpedicao')[0][2].selected = result.tipoAtaqueExpedicao == 2
 
-    if (result.tipoAtaqueExpedicao == 3) {
-        $('#tipoAtaqueExpedicao')[0][3].selected = true
-    }
-    else {
-        $('#tipoAtaqueExpedicao')[0][3].selected = false
-    }
+    $('#tipoAtaqueExpedicao')[0][3].selected = result.tipoAtaqueExpedicao == 3
 
-    if (result.tipoAtaqueExpedicao == 4) {
-        $('#tipoAtaqueExpedicao')[0][4].selected = true
-    }
-    else {
-        $('#tipoAtaqueExpedicao')[0][4].selected = false
-    }
+    $('#tipoAtaqueExpedicao')[0][4].selected = result.tipoAtaqueExpedicao == 4
+
 
     tipoAtaqueExpedicao[0].value = result.tipoAtaqueExpedicao
 })
