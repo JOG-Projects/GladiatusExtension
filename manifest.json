@@ -1,0 +1,49 @@
+{
+    "name": "Gladiatus Tatanka BOT",
+    "version": "1",
+    "description": "Missions Atack Eat BuyFood",
+    "browser_action": {
+        "name": "Tatanka BOT",
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "tabs",
+        "http://*.gladiatus.gameforge.com/game/index.php*",
+        "https://*.gladiatus.gameforge.com/game/index.php*",
+        "storage",
+        "tabCapture",
+        "background",
+        "activeTab"
+    ],
+    "web_accessible_resources": [
+        "core/locale/*",
+        "core/resources/*",
+        "core/source/*"
+    ],
+    "background": {
+        "scripts": [
+            "core/background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "core/info.js",
+                "core/locale.js",
+                "core/manager.js",
+                "core/inject.js",
+                "init.js",
+                "tools.js",
+                "jquery.min.js",
+                "food.js",
+                "settings.js",
+                "tasks.js"
+            ],
+            "matches": [
+                "https://*.gladiatus.gameforge.com/game/*"
+            ]
+        }
+    ],
+    "manifest_version": 2
+}
