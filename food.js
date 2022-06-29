@@ -46,110 +46,35 @@ async function comprarFood(value) {
     return new Promise(function (resolve, reject) {
         setTimeout(() => {
             if (value == true) {
-                var shop = $('#shop')
+                var shop = $('#shop')[0]
                 var shopNav = $('#shop_nav')
                 var qtd_food = 5;
-                var bestFood1 = null;
-                var bestFood2 = null;
-                var bestFood3 = null;
-                var bestFood4 = null;
-                var bestFood5 = null;
-                var bestFood6 = null;
-                var bestFood7 = null;
-                var bestFood8 = null;
-                var bestFood9 = null;
-                var bestFood10 = null;
 
-                for (var i = 0; i < shop[0].children.length; i++) {
-                    if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood1 == null) {
-                        bestFood1 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood2 == null) {
-                        bestFood2 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood3 == null) {
-                        bestFood3 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood4 == null) {
-                        bestFood4 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood5 == null) {
-                        bestFood5 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood6 == null) {
-                        bestFood6 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood7 == null) {
-                        bestFood7 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood8 == null) {
-                        bestFood8 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood9 == null) {
-                        bestFood9 = shop[0].children[i]
-                    } else if ((shop[0].children[i].attributes[8].value.indexOf('icon_rubies') != -1) == false && bestFood10 == null) {
-                        bestFood10 = shop[0].children[i]
+                var bestFoods = [];
+
+                for (var i = 0; i < shop.children.length; i++) {
+                    let naoAchouRubies = shop.children[i].attributes[8].value.indexOf('icon_rubies') == -1;
+
+                    for (var j = 0; j < 9; j++) {
+                        if (naoAchouRubies && bestFoods[j] == null) {
+                            bestFoods[j] = shop.children[i]
+                        }
                     }
-
                 }
 
-                setTimeout(() => {
-                    var targLink = bestFood1
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood2
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood3
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood4
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood5
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood6
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood7
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood8
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood9
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
-                setTimeout(() => {
-                    var targLink = bestFood10
-                    var dblclickEvt = document.createEvent("MouseEvents");
-                    dblclickEvt.initEvent("dblclick");
-                    targLink.dispatchEvent(dblclickEvt);
-                }, 2000)
+                for (let food in bestFoods) {
+                    setTimeout(() => {
+                        var targLink = food
+                        var dblclickEvt = document.createEvent("MouseEvents");
+                        dblclickEvt.initEvent("dblclick");
+                        targLink.dispatchEvent(dblclickEvt);
+                    }, 2000)
+                }
+
                 setTimeout(() => {
                     chrome.storage.local.set({ 'buyFood': false }, null);
                     resolve()
                 }, 3000)
-
 
             } else {
                 resolve()
