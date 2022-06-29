@@ -3,8 +3,7 @@
     "version": "1",
     "description": "Missions Atack Eat BuyFood",
     "browser_action": {
-        "name": "Tatanka BOT",
-        "default_popup": "index.html"
+        "name": "Tatanka BOT"
     },
     "permissions": [
         "tabs",
@@ -35,7 +34,6 @@
                 "core/inject.js",
                 "init.js",
                 "tools.js",
-                "jquery.min.js",
                 "food.js",
                 "settings.js",
                 "tasks.js"
