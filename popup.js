@@ -1,5 +1,3 @@
-//#region  Main
-
 var onOff = $('#onOff')
 chrome.storage.local.get('onOff', function (result) {
     onOff[0].checked = result.onOff
@@ -9,6 +7,7 @@ onOff[0].addEventListener('change', function (event) {
     chrome.storage.local.set({ 'onOff': onOff[0].checked }, null);
 })
 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var arena = $('#arena')
 chrome.storage.local.get('arena', function (result) {
     arena[0].checked = result.arena
@@ -210,7 +209,6 @@ chrome.storage.local.get('tipoAtaqueExpedicao', function (result) {
     $('#tipoAtaqueExpedicao')[0][3].selected = result.tipoAtaqueExpedicao == 3
 
     $('#tipoAtaqueExpedicao')[0][4].selected = result.tipoAtaqueExpedicao == 4
-
 
     tipoAtaqueExpedicao[0].value = result.tipoAtaqueExpedicao
 })
