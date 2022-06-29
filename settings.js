@@ -1,7 +1,3 @@
-
-
-
-
 async function loadOnOff() {
     return new Promise(function (resolve, reject) {
         chrome.storage.local.get('onOff', function (result) {

@@ -6,8 +6,6 @@
 // Get browser object
 var Browser = typeof browser === 'undefined' ? chrome : browser;
 
-
-
 var init = () => {
 	// Wait until all ready
 	// Usually this will be true only the first time
