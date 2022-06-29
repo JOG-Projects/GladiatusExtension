@@ -1,3 +1,5 @@
+//#region  Main
+
 var onOff = $('#onOff')
 chrome.storage.local.get('onOff', function (result) {
     onOff[0].checked = result.onOff
@@ -7,7 +9,6 @@ onOff[0].addEventListener('change', function (event) {
     chrome.storage.local.set({ 'onOff': onOff[0].checked }, null);
 })
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var arena = $('#arena')
 chrome.storage.local.get('arena', function (result) {
     arena[0].checked = result.arena
@@ -222,10 +223,6 @@ var tipoAtaqueExpedicao2 = $('#tipoAtaqueExpedicao')[0][2].selected
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function muda(result, itemId) {
-    if (result == true) {
-        document.getElementById(itemId).src = "img/" + itemId + "_active.jpg";
-    } else {
-        document.getElementById(itemId).src = "img/" + itemId + "_inactive.jpg";
-    }
+    let image = result ? "_active.jpg" : "_inactive.jpg";
+    document.getElementById(itemId).src = image;
 }
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
