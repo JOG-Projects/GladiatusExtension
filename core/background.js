@@ -3,18 +3,13 @@
  * Gladiatus Crazy Add On
  */
 
-
-
-
 let Browser = typeof browser === 'undefined' ? chrome : browser;
-
 
 /* Checker Functions */
 
 var isInteger = function (variable) {
 	return variable === parseInt(variable, 10);
 };
-
 
 /* Script Loader */
 
@@ -50,8 +45,6 @@ var loadScript = function (file, callback) {
 	document.body.appendChild(script);
 }
 
-
-
 /* Actions */
 
 var actionGetRecipe = function (request, sender, response) {
@@ -71,8 +64,6 @@ var actionManager = function (request, sender, response) {
 
 	}
 }
-
-
 
 /* Handler */
 
