@@ -20,6 +20,14 @@ async function loadArena() {
         })
     });
 }
+async function loadatkListPlayers() {
+    return new Promise(function (resolve, reject) {
+        chrome.storage.local.get('atkListPlayers', function (result) {
+            resolve(result.atkListPlayers)
+        })
+    });
+}
+
 async function loadCircus() {
     return new Promise(function (resolve, reject) {
         chrome.storage.local.get('circus', function (result) {

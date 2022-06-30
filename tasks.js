@@ -1,4 +1,3 @@
-
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*
 chrome.runtime.sendMessage({ action: "getTabId" }, function (res) {
@@ -32,9 +31,9 @@ async function loadSettings() {
     try {
         var menuMinLife = await loadMinLife()
 
-
         await selectedTab()
         await loadOnOff()
+        let playersList = await loadatkListPlayers()
         var menuQtdMinimaFood = await loadMinFood()
         var menuMissaoArena = await loadFazerArena()
         var menuMissaoGrupoArena = await loadFazerGoupArena()
@@ -76,6 +75,8 @@ async function loadSettings() {
 
         await pegarMissoes(menuMissaoArena, menuMissaoGrupoArena, menuMissaoCombate, menuMissaoMaxQtdConsecultivos)
 
+        await atkPlayers(playersList)
+
         setTimeout(() => {
             console.log("LoadSetings")
             loadSettings()
@@ -87,6 +88,40 @@ async function loadSettings() {
 
 }
 
+async function atkPlayers(playersText) {
+    if (playersText == false) {
+        return
+    }
+
+    var players = playersText.split(";")
+
+    for (let player in players)
+    {
+        await abrirArena()
+
+        await iniciarAtk(player)
+
+        await timeout(61000)
+    }
+}
+
+async function abrirArena() {
+    let botaoArena = $("#cooldown_bar_text_arena")[0]
+    botaoArena.click()
+    await timeout(2000)
+}
+
+async function timeout(ms) {
+    await new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function iniciarAtk(player) {
+    let inputNome = $("#ujn")[0]
+    inputNome.value = player;
+
+    let botaoIr = $(".button3")[0]
+    botaoIr.click()
+}
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 async function abaDoll() {

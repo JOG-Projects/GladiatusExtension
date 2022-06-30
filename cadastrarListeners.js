@@ -1,3 +1,12 @@
+var atkPlayersList = $("#atkListPlayers")[0]
+chrome.storage.local.get('atkListPlayers', function (result) {
+    atkPlayersList.text = result.atkListPlayers
+})
+
+atkPlayersList.addEventListener('change', function (event) {
+    chrome.storage.local.set({ 'atkListPlayers': atkPlayersList.text }, null);
+})
+
 var onOff = $('#onOff')
 chrome.storage.local.get('onOff', function (result) {
     onOff[0].checked = result.onOff
@@ -187,9 +196,10 @@ comprarComida[0].addEventListener('change', function (event) {
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var setTab = $('#setTab')
 setTab[0].addEventListener('click', function (event) {
-    chrome.tabs.query({ active: true }, (tabs) => {
-        console.log(tabs[0].id)
-        chrome.storage.local.set({ 'getTabIdSwitch': tabs[0].id }, null);
+    chrome.tabs.query({ url: "*gladiatus.gameforge.com*" }, (tabs) => {
+        let tab = tabs[0];
+        console.log(tab.id)
+        chrome.storage.local.set({ 'getTabIdSwitch': tab.id }, null);
     });
 })
 
