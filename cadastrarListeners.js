@@ -196,7 +196,7 @@ comprarComida[0].addEventListener('change', function (event) {
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var setTab = $('#setTab')
 setTab[0].addEventListener('click', function (event) {
-    chrome.tabs.query({ url: "*gladiatus.gameforge.com*" }, (tabs) => {
+    chrome.tabs.query({ url: "https://lobby.gladiatus.gameforge.com/" }, (tabs) => {
         let tab = tabs[0];
         console.log(tab.id)
         chrome.storage.local.set({ 'getTabIdSwitch': tab.id }, null);
