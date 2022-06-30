@@ -232,5 +232,5 @@ var tipoAtaqueExpedicao2 = $('#tipoAtaqueExpedicao')[0][2].selected
 
 function muda(result, itemId) {
     let image = result ? "_active.jpg" : "_inactive.jpg";
-    document.getElementById(itemId).src = image;
+    document.getElementById(itemId).src = `img/${itemId}${image}`;
 }
