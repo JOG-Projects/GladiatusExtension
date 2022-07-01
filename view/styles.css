@@ -1,0 +1,23 @@
+body {
+    background-image: url("../resource/img/background_image.png");
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+}
+.switch {
+  margin-left: 120px;
+  width: 600px;
+}
+.set-number {
+    width: 600px;
+    margin: auto;
+}
+.list-players{
+    width: 380px;
+    height: 100px;
+}

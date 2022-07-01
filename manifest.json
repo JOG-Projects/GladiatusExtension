@@ -1,47 +1,29 @@
 {
-    "name": "Gladiatus Tatanka BOT",
-    "version": "1",
-    "description": "Missions Atack Eat BuyFood",
-    "browser_action": {
-        "name": "Tatanka BOT"
+  "name": "Gladiatus Tatanka BOT",
+  "version": "2",
+  "description": "Extension for automating Gladiatus tasks",
+
+  "action": {
+    "default_icon": { 
+      "16": "images/icon16.png", 
+      "24": "images/icon24.png", 
+      "32": "images/icon32.png" 
     },
-    "permissions": [
-        "tabs",
-        "http://*.gladiatus.gameforge.com/game/index.php*",
-        "https://*.gladiatus.gameforge.com/game/index.php*",
-        "storage",
-        "tabCapture",
-        "background",
-        "activeTab"
-    ],
-    "web_accessible_resources": [
-        "core/locale/*",
-        "core/resources/*",
-        "core/source/*"
-    ],
-    "background": {
-        "scripts": [
-            "core/background.js"
-        ],
-        "persistent": false
-    },
-    "content_scripts": [
-        {
-            "js": [
-                "core/info.js",
-                "core/locale.js",
-                "core/manager.js",
-                "core/inject.js",
-                "init.js",
-                "tools.js",
-                "food.js",
-                "settings.js",
-                "tasks.js"
-            ],
-            "matches": [
-                "https://*.gladiatus.gameforge.com/game/*"
-            ]
-        }
-    ],
-    "manifest_version": 2
+    "default_title": "Click Me", 
+    "default_popup": "view/popup.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "tabCapture",
+    "background",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "host_permissions": [ "<all_urls>" ],
+  "manifest_version": 3
 }
