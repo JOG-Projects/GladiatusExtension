@@ -18,7 +18,7 @@ function handleMessage(request, sender, sendResponse) {
 }
 
 function run() {
-    chrome.tabs.query({ url: "https://s17-pt.gladiatus.gameforge.com/*" }, async (tabs) => {
+    chrome.tabs.query({ url: "https://*.gladiatus.gameforge.com/*" }, async (tabs) => {
         if (tabs.lenght > 1) {
             console.error("More than one gladiatus tabs are open")
             return;
