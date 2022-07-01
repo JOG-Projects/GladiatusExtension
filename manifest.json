@@ -21,7 +21,7 @@
     "scripting"
   ],
   "background": {
-    "service_worker": "src/background.js",
+    "service_worker": "src/services/background.js",
     "type": "module"
   },
   "host_permissions": [ "<all_urls>" ],

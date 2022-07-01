@@ -1,4 +1,4 @@
-import { execute, setStorage, getFromStorage, timeout } from "./background_utils.js";
+import { execute, setStorage, getFromStorage, timeout } from "../background_utils.js";
 
 export async function atkPlayers() {
     let playersText = await getFromStorage("atkListPlayers");

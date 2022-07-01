@@ -8,7 +8,7 @@ function handleMessage(request, sender, sendResponse) {
     console.log("request type: " + request.type)
 
     if (request.type === "config")
-        chrome.tabs.create({ 'url': 'view/config.html', 'selected': true });
+        chrome.tabs.create({ 'url': './view/config.html', 'selected': true });
 
     if (request.type === "run") {
         run();
