@@ -8,7 +8,7 @@ export async function atkPlayers() {
         return
     }
 
-    let players = playersText.split(";")
+    let players = playersText.split("\n")
 
     console.log("iniciando ataque aos players " + playersText)
 
