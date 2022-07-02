@@ -19,7 +19,7 @@ async function initAlarm() {
     return;
   }
 
-  await createAlarm("atkRun", ultima_run.);
+  await createAlarm("atkRun", ultima_run);
 }
 
 function createAlarm(alarmName, date, cooldown) {
@@ -54,6 +54,8 @@ function handleMessage(request, sender, sendResponse) {
       : "from the extension"
   );
   console.log("request type: " + request.type);
+    console.log(sender.tab ? `from a content script: ${sender.tab.url}` : "from the extension");
+    console.log(`request type: ${request.type}`)
 
   if (request.type === "config")
     chrome.tabs.create({ url: "./view/config.html", selected: true });
@@ -87,7 +89,7 @@ function run() {
         return;
       }
 
-      console.log("Found tab id: " + tab.id);
+        console.log(`"Found tab id: ${tab.id}`)
 
       await setStorage("tabId", tab.id);
 

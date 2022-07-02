@@ -10,7 +10,7 @@ export async function atkPlayers() {
 
     let players = playersText.split("\n")
 
-    console.log("iniciando ataque aos players " + playersText)
+    console.log(`iniciando ataque aos players ${playersText}`)
 
     for (let i in players) {
         await attackPlayer(players[i]);
@@ -23,9 +23,16 @@ async function attackPlayer(player) {
 
     await setStorage("currentAtkPlayer", player);
 
-    console.log("Atacando jogador: " + player);
+    console.log(`Atacando jogador: ${player}`);
     await execute('src/injected/objectives/arena/atacarPlayer.js');
+    
+    await getTimeout();
+    
+    let timeout = getFromStorage("timeout");
 
-    console.log("Esperando cooldown 1 min");
-    await timeout(60000);
+    console.log(`Esperando cooldow: ${timeout}`);
+    await timeout(timeout);
+
+
+    
 }
