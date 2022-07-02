@@ -4,8 +4,8 @@ import { setStorage } from "./background_utils.js"
 chrome.runtime.onMessage.addListener(handleMessage);
 
 function handleMessage(request, sender, sendResponse) {
-    console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-    console.log("request type: " + request.type)
+    console.log(sender.tab ? `from a content script: ${sender.tab.url}` : "from the extension");
+    console.log(`request type: ${request.type}`)
 
     if (request.type === "config")
         chrome.tabs.create({ 'url': './view/config.html', 'selected': true });
@@ -31,7 +31,7 @@ function run() {
             return;
         }
 
-        console.log("Found tab id: " + tab.id)
+        console.log(`"Found tab id: ${tab.id}`)
 
         await setStorage("tabId", tab.id)
 
