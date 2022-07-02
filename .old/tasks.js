@@ -1,39 +1,8 @@
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*
-chrome.runtime.sendMessage({ action: "getTabId" }, function (res) {
-    console.log("Resposta")
-    console.log(res.tabId)// ok
-});
-chrome.runtime.sendMessage({ action: "setTabId" }, function (res) {
-    console.log("Seted")
-    console.log(res.getTabIdSwitch)// ok
-});
-*/
-async function selectedTab() {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.local.get('getTabIdSwitch', function (result) {
-            console.log("trocando de aba: " + result.getTabIdSwitch)
-            chrome.tabs.update(result.getTabIdSwitch, { selected: true });
-            resolve()
-        })
-    })
-}
 
-async function loadatkListPlayers() {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.local.get('atkListPlayers', function (result) {
-            console.log("loaded atkListPlayers " + result.atkListPlayers)
-            resolve(result.atkListPlayers)
-        })
-    });
-}
 async function main() {
     try {
-
-        await selectedTab()
-        let playersList = await loadatkListPlayers()
-        await atkPlayers(playersList)
-
+        
         var menuMinLife = await loadMinLife()
         await loadOnOff()
         var menuQtdMinimaFood = await loadMinFood()
@@ -54,7 +23,6 @@ async function main() {
 
         var menuAbaFood = 0
 
-        await abaDoll()
         await abaBag(menuAbaFood)
         await abaBensGerais()
 
@@ -87,40 +55,6 @@ async function main() {
         //reload()
     }
 
-}
-
-async function atkPlayers(playersText) {
-    if (playersText == false) {
-        return
-    }
-
-    var players = playersText.split(";")
-
-    for (let player in players) {
-        await abrirArena()
-
-        await iniciarAtk(player)
-
-        await timeout(61000)
-    }
-}
-
-async function abrirArena() {
-    let botaoArena = $("#cooldown_bar_text_arena")[0]
-    botaoArena.click()
-    await timeout(2000)
-}
-
-async function timeout(ms) {
-    await new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function iniciarAtk(player) {
-    let inputNome = $("#ujn")[0]
-    inputNome.value = player;
-
-    let botaoIr = $(".button3")[0]
-    botaoIr.click()
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
