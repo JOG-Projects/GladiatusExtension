@@ -1,4 +1,4 @@
-const button_run = document.getElementById("run")
+const button_run = document.getElementById("start")
 const button_config = document.getElementById("config")
 
 button_config.onclick = () => {

@@ -21,6 +21,6 @@ function setStorage(key, value) {
     return new Promise(function (resolve, reject) {
         let obj = {}
         obj[key] = value
-        chrome.storage.sync.set(obj, resolve());
+        chrome.storage.sync.set(obj, resolve);
     });
 }

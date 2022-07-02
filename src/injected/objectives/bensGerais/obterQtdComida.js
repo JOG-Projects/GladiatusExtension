@@ -1,5 +1,3 @@
-import { setStorage } from "../../../services/background_utils.js";
-
 (async () => {
     try {
         let qtdComida = document.getElementById('inv').children.length;
