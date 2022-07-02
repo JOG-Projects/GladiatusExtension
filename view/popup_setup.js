@@ -6,5 +6,5 @@ button_config.onclick = () => {
 }
 
 button_run.onclick = () => {
-    chrome.runtime.sendMessage({ type: "run" });
+    chrome.runtime.sendMessage({ type: "start" });
 }
