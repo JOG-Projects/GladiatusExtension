@@ -25,14 +25,11 @@ async function attackPlayer(player) {
 
     console.log(`Atacando jogador: ${player}`);
     await execute('src/injected/objectives/arena/atacarPlayer.js');
-    
-    await getTimeout();
-    
-    let timeout = getFromStorage("timeout");
 
-    console.log(`Esperando cooldow: ${timeout}`);
-    await timeout(timeout);
+    await execute('src/injected/bjectives/arena/getTimeout.js')
 
+    let cooldown = getFromStorage("atkCooldown");
 
-    
+    console.log(`Esperando cooldown: ${cooldown}`);
+    await timeout((cooldown.minutes * 60 + cooldown.seconds) * 1000);
 }
