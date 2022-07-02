@@ -21,9 +21,6 @@ async function main() {
         var menuComprarComida = await loadComprarComida()
         var menuLoadTipoAtaqueExpedicao = await loadTipoAtaqueExpedicao()
 
-        var menuAbaFood = 0
-
-        await abaBag(menuAbaFood)
         await abaBensGerais()
 
         var menuMissaoMaxQtdConsecultivos = await loadMaxConsecultivos()
@@ -80,23 +77,7 @@ async function abaDoll() {
     })
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async function abaBag(idBag) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(() => {
-            if (verificarPagina('mod=overview') == true) {
-                var aba = $("#inventory_nav")
-                if (aba[0].children[idBag].classList.length == 1) {
-                    aba[0].children[idBag].click()
-                    resolve()
-                } else {
-                    resolve()
-                }
-            } else {
-                resolve()
-            }
-        }, 100)
-    })
-}
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 async function abaBensGerais() {
