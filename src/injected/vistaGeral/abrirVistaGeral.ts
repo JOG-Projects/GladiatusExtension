@@ -1,5 +1,5 @@
-import { clickAndWait, doWork, log } from "../../services/utils";
+import { clickAndWait, doWork, log, tryUntil } from "../../services/utils";
 
-doWork("abrirVistaGeral", 1000, async () => {
-    clickAndWait('//*[@id="mainmenu"]/a[1]');
+doWork("abrirVistaGeral", async () => {
+    await tryUntil(async () => clickAndWait('//*[@id="mainmenu"]/a[1]'));
 });

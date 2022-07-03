@@ -1,5 +1,5 @@
-import { clickAndWait, doWork } from "../../services/utils";
+import { clickAndWait, doWork, tryUntil } from "../../services/utils";
 
-doWork("abrirArena", 1000, async () => {
-    clickAndWait('//*[@id="cooldown_bar_arena"]/a');
+doWork("abrirArena", async () => {
+    await tryUntil(async () => clickAndWait('//*[@id="cooldown_bar_arena"]/a'));
 });

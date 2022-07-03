@@ -1,5 +1,5 @@
-import { clickAndWait, doWork } from "../../services/utils";
+import { clickAndWait, doWork, tryUntil } from "../../services/utils";
 
-doWork("abrirBensGerais", 1000, async () => {
-    clickAndWait('//*[@id="submenu1"]/a[6]');
+doWork("abrirBensGerais", async () => {
+    await tryUntil(async () => clickAndWait('//*[@id="submenu1"]/a[6]'));
 });

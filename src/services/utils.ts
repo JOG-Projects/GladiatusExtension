@@ -69,23 +69,22 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function doWork(file: string, ms: number, work: () => Promise<void>) {
+export async function doWork(file: string, work: () => Promise<void>) {
     try {
         await work();
     } catch (e) {
         await logError(e);
     }
     finally {
-        await resolvePromise(file, ms);
+        await resolvePromise(file);
     }
 }
 
 async function promisifyExecute(file: string) {
     await new Promise<void>(resolve => {
-        let listener = async (message: { type: string, ms: number }) => {
+        let listener = async (message: { type: string }) => {
             if (message.type === file) {
                 chrome.runtime.onMessage.removeListener(listener);
-                await timeout(message.ms)
                 resolve();
             }
         }
@@ -94,6 +93,6 @@ async function promisifyExecute(file: string) {
     );
 }
 
-async function resolvePromise(file: string, ms: number) {
-    await chrome.runtime.sendMessage({ type: file, ms: ms });
+async function resolvePromise(file: string) {
+    await chrome.runtime.sendMessage({ type: file });
 }

@@ -1,8 +1,12 @@
-import { getByXpath, setStorage, log, doWork } from "../../services/utils";
+import { getByXpath, setStorage, log, doWork, tryUntil } from "../../services/utils";
 import { Cooldown } from "../../services/model/cooldown";
 import { TipoLog } from "../../services/model/tipoLog";
 
-doWork("getAtkCooldown", 0, async () => {
+doWork("getAtkCooldown", async () => {
+    await tryUntil(async () => await getAtkCooldown());
+});
+
+async function getAtkCooldown() {
     let elemento = getByXpath<HTMLElement>('//*[@id="cooldown_bar_text_arena"]');
     let textCooldown = elemento.innerHTML;
 
@@ -14,4 +18,4 @@ doWork("getAtkCooldown", 0, async () => {
 
     await setStorage("atkCooldown", new Cooldown(hours, minutes, seconds));
     await log(TipoLog.info, `Valor do cooldown obtido: ${textCooldown}`);
-});
+}

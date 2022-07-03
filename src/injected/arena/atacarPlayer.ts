@@ -1,10 +1,10 @@
 import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../services/utils";
 import { TipoLog } from "../../services/model/tipoLog";
 
-doWork("atacarPlayer", 1000, async () => {
+doWork("atacarPlayer", async () => {
     await tryUntil(setPlayerName);
     await log(TipoLog.info, "Nome inserido")
-    clickAndWait('//*[@id="content"]/article/section/form/p[2]/input[2]');
+    await tryUntil(async () => clickAndWait('//*[@id="content"]/article/section/form/p[2]/input[2]'));
 });
 
 async function setPlayerName(): Promise<void> {
