@@ -1,5 +1,5 @@
 import { createAlarm, getFromStorage, setStorage } from "./background_utils.js";
-import { atkPlayers } from "./objectives/atkPlayers.js";
+import { initAttackPlayers } from "./objectives/atkPlayers.js";
 
 async function startAtkAlarm() {
     let runCooldown = (await getFromStorage("runCooldown")) ?? 25;
@@ -26,7 +26,7 @@ async function startAtkAlarm() {
 export async function handleAlarm(alarm) {
     console.log(`Disparado alarme: ${alarm.name}`);
     if (alarm.name === "atkRun") {
-        await atkPlayers();
+        await initAttackPlayers();
 
         let ultimaRunUnix = (await getFromStorage("ultimaRunCompleta")) ?? Date.now();
         let qtdAtk = (await getFromStorage("qtdAtks")) ?? 0;

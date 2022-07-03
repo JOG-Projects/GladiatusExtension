@@ -26,9 +26,11 @@ function setStorage(key, value) {
 }
 
 function log(log) {
-    return new Promise((resolve, reject) => chrome.runtime.sendMessage("GTB", log, null, resolve));
+    return new Promise(function (resolve, reject) {
+        chrome.runtime.sendMessage(log, resolve)
+    });
 }
 
 async function logError(e) {
-    await log({type:"error", message: `${e}`})
+    await log({ type: "error", message: `${e}` })
 }
