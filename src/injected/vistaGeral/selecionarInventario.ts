@@ -1,12 +1,7 @@
-import { clickAndWait, log, logError } from "../../services/background_utils";
+import { clickAndWait, doWork, log } from "../../services/utils";
 import { TipoLog } from "../../services/model/tipoLog";
 
-(async () => {
-    try {
-        await clickAndWait('//*[@id="inventory_nav"]/a[1]', 1000);
-        await log(TipoLog.info, "Selecionando inventário");
-
-    } catch (e) {
-        await logError(e);
-    }
-})();
+doWork("selecionarInventario", async () => {
+    await clickAndWait('//*[@id="inventory_nav"]/a[1]', 1000);
+    await log(TipoLog.info, "Selecionando inventário");
+});

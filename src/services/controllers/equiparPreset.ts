@@ -1,4 +1,4 @@
-import { execute } from "../background_utils";
+import { execute } from "../utils";
 
 export async function equiparPreset() {
     await execute('abrirVistaGeral');

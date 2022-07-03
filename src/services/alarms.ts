@@ -1,4 +1,4 @@
-import { createAlarm, getFromStorage, setStorage, tomorrowMidnight } from "./background_utils";
+import { createAlarm, getFromStorage, setStorage, tomorrowMidnight } from "./utils";
 import { initAttackPlayers } from "./controllers/atkPlayers";
 
 async function startAtkAlarm(): Promise<void> {

@@ -1,4 +1,4 @@
-import { execute, setStorage, getFromStorage, timeout } from "../background_utils";
+import { execute, setStorage, getFromStorage, timeout } from "../utils";
 import { Cooldown } from "../model/cooldown";
 
 export async function initAttackPlayers(): Promise<void> {

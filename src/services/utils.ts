@@ -70,10 +70,6 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function resolvePromise(file: string) {
-    await chrome.runtime.sendMessage(file);
-}
-
 export async function doWork(file: string, work: () => Promise<void>) {
     try {
         await work();
@@ -96,4 +92,8 @@ async function promisifyExecute(file: string) {
         chrome.runtime.onMessage.addListener(listener);
     }
     );
+}
+
+async function resolvePromise(file: string) {
+    await chrome.runtime.sendMessage(file);
 }

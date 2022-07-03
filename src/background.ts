@@ -1,5 +1,5 @@
 import { initAlarms, handleAlarm } from "./services/alarms";
-import { setStorage } from "./services/background_utils";
+import { execute, setStorage } from "./services/utils";
 import { TipoLog } from "./services/model/tipoLog";
 
 chrome.runtime.onMessage.addListener(handleMessage);
@@ -37,9 +37,8 @@ async function start(): Promise<void> {
 }
 
 async function setTabId(): Promise<void> {
-    let tabs = await new Promise<chrome.tabs.Tab[]>((resolve) => {
-        chrome.tabs.query({ url: "https://*.gladiatus.gameforge.com/*" }, (tabs) => resolve(tabs))
-    });
+    let query: chrome.tabs.QueryInfo = { url: "https://*.gladiatus.gameforge.com/*" };
+    let tabs = await new Promise<chrome.tabs.Tab[]>(resolve => chrome.tabs.query(query, resolve));
 
     if (tabs.length > 1) {
         throw "More than one gladiatus tabs are open";

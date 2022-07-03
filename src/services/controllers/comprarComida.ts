@@ -1,4 +1,4 @@
-import { execute, getFromStorage } from "../background_utils";
+import { execute, getFromStorage } from "../utils";
 
 export async function comprarComida(): Promise<void>{
     await execute('abrirBensGerais');
