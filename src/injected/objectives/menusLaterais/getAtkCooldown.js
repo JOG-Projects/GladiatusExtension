@@ -1,13 +1,12 @@
 (async () => {
     try {
-        await timeout(1000)
+        let textCooldown = getByXpath('//*[@id="cooldown_bar_text_arena"]').innerHTML
 
-        let textCooldown = getByXpath('//*[@id="cooldown_bar_text_arena"]').innerHTML.replace(":", "")
+        let timeSegments = textCooldown.split(":")
 
-        let l = textCooldown.length;
-
-        let seconds = Number(textCooldown.slice(l - 2, l) ?? 0)
-        let minutes = Number(textCooldown.slice(l - 4, l - 2) ?? 0)
+        let hours = Number(timeSegments[0] ?? 0)
+        let minutes = Number(timeSegments[1] ?? 0)
+        let seconds = Number(timeSegments[2] ?? 0)
 
         await setStorage("atkCooldown", { seconds: seconds, minutes: minutes })
     } catch (e) {

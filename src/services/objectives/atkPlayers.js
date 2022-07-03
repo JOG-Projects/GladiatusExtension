@@ -15,7 +15,7 @@ export async function atkPlayers() {
     for (let player of players) {
         await attackPlayer(player);
 
-        await checarComida();
+        await checarHP();
 
         await waitAtkCooldown();
     }
@@ -39,7 +39,7 @@ async function waitAtkCooldown() {
     await timeout((cooldown.minutes * 60 + cooldown.seconds) * 1000);
 }
 
-async function checarComida() {
+async function checarHP() {
     await execute('src/injected/objectives/menusLaterais/getHP.js');
     let percentHP = await getFromStorage("percentHP");
 

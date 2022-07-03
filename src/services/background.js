@@ -36,15 +36,12 @@ async function setTabId() {
     });
 
     if (tabs.length > 1) {
-        console.error("More than one gladiatus tabs are open");
-        return;
+        throw "More than one gladiatus tabs are open";
     }
 
     let tab = tabs[0];
-
-    if (tab == false) {
-        console.error("Cant find gladiatus tab");
-        return;
+    if (!tab) {
+        throw "Cant find gladiatus tab";
     }
 
     console.log(`"Found tab id: ${tab.id}`)
