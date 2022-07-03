@@ -1,11 +1,32 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const { readdirSync } = require('fs');
+
+const getAllItems = (searchPath) => readdirSync(searchPath).map(p => path.resolve(searchPath, p));
+
+const injectedPath = path.resolve(__dirname, "..", "src", "injected");
+
+const injectedDirectories = getAllItems(injectedPath);
+
+const injectedScripts = injectedDirectories.map(p => getAllItems(p)).flat()
+
+const userEntries =
+{
+   config: path.resolve(__dirname, "..", "src", "view", "config_setup.ts"),
+   popup: path.resolve(__dirname, "..", "src", "view", "popup_setup.ts"),
+   background: path.resolve(__dirname, "..", "src", "background.ts"),
+};
+
+const entries = injectedScripts.reduce(function (obj, el) {
+   obj[path.parse(el).name] = el;
+   return obj
+}, userEntries)
+
+console.log(entries)
+
 module.exports = {
    mode: "production",
-   entry: { 
-      popup: path.resolve(__dirname, "..", "src", "view", "popup_setup.ts"),
-      background: path.resolve(__dirname, "..", "src", "background.ts"),
-   },
+   entry: entries,
    output: {
       path: path.join(__dirname, "../dist"),
       filename: "[name].js",
