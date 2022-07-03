@@ -9,8 +9,7 @@ chrome.alarms.onAlarm.addListener(handleAlarm);
 // chrome.runtime.onStartup.addListener(initAlarm) Para registrar os alarmes ao iniciar o navegador.
 
 async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void): Promise<void> {
-    console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-    console.log("request type: " + request.type);
+    console.log(`Message: ${request.type}`);
 
     if (request.type === "config")
         chrome.tabs.create({ url: "config.html", selected: true });
