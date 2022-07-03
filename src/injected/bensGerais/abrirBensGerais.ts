@@ -1,5 +1,6 @@
-import { clickAndWait, log, logError } from "../../../services/background_utils";
-import { TipoLog } from "../../../services/model/tipoLog";
+import { clickAndWait, log, logError } from "../../services/background_utils";
+import { TipoLog } from "../../services/model/tipoLog";
+
 
 (async () => {
     try {

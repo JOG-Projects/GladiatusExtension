@@ -1,5 +1,5 @@
-import { clickAndWait, getByXpath, getFromStorage, log, logError, tryUntil } from "../../../services/background_utils";
-import { TipoLog } from "../../../services/model/tipoLog";
+import { clickAndWait, getByXpath, getFromStorage, log, logError, tryUntil } from "../../services/background_utils";
+import { TipoLog } from "../../services/model/tipoLog";
 
 (async () => {
     try {

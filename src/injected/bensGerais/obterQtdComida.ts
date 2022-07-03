@@ -1,5 +1,6 @@
-import { log, logError, setStorage } from "../../../services/background_utils";
-import { TipoLog } from "../../../services/model/tipoLog";
+import { log, logError, setStorage } from "../../services/background_utils";
+import { TipoLog } from "../../services/model/tipoLog";
+
 
 (async () => {
     try {
