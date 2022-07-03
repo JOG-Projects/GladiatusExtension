@@ -12,7 +12,7 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 
 export async function execute(file: string): Promise<void> {
     var tabId = await getFromStorage<number>("tabId");
-    await new Promise<any[]>(function (resolve, reject) {
+    await new Promise<any[]>(function (resolve) {
         let details: chrome.tabs.InjectDetails = {
             file: `${file}.js`
         };
@@ -35,7 +35,7 @@ export async function setStorage(key: string, value: any): Promise<void> {
 }
 
 export async function timeout(ms: number): Promise<void> {
-    await new Promise<void>(resolve => setTimeout(resolve, ms))
+    await new Promise<void>(resolve => window.setTimeout(resolve, ms))
 }
 
 export function createAlarm(alarmName: string, unixTime: number, minutesCooldown: number): void {

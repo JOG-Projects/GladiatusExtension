@@ -4,6 +4,7 @@ import { TipoLog } from "../../services/model/tipoLog";
 (async () => {
     try {
         await tryUntil(setPlayerName);
+        await log(TipoLog.info, "Nome inserido")
         await clickAndWait('//*[@id="content"]/article/section/form/p[2]/input[2]', 1000);
     } catch (e) {
         await logError(e);
