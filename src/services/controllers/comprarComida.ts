@@ -1,9 +1,9 @@
 import { execute, getFromStorage } from "../background_utils";
 
 export async function comprarComida(): Promise<void>{
-    await execute('src/injected/objectives/bensGerais/abrirBensGerais.js');
-    await execute('src/injected/objectives/bensGerais/abrirTabComidas.js');
-    await execute('src/injected/objectives/vistaGeral/obterQtdComida.js');
+    await execute('abrirBensGerais');
+    await execute('abrirTabComidas');
+    await execute('obterQtdComida');
     let qtdComida = await getFromStorage<number>('qtdComida');
     let qtdComidaMin = await getFromStorage<number>('qtdComidaMin');
 
@@ -11,5 +11,5 @@ export async function comprarComida(): Promise<void>{
         return;
     }
 
-    await execute('src/injected/objectives/bensGerais/comprarComida.js');
+    await execute('comprarComida');
 }

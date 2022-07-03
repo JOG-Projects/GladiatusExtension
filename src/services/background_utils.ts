@@ -15,7 +15,7 @@ export async function execute(file: string): Promise<void> {
     await new Promise<any[]>(function (resolve, reject) {
         let sexo = {
             tabId: tabId,
-            file: file
+            file: `${file}.js`
         };
         chrome.tabs.executeScript(sexo, resolve)
     });

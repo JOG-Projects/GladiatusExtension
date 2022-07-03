@@ -32,15 +32,15 @@ async function attackPlayers(players: string[]): Promise<void> {
 
 async function attackPlayer(player: string): Promise<void> {
     console.log("Abrindo arena");
-    await execute('src/injected/objectives/arena/abrirArena.js');
+    await execute('abrirArena');
 
     await setStorage("currentAtkPlayer", player);
     console.log(`Atacando jogador: ${player}`);
-    await execute('src/injected/objectives/arena/atacarPlayer.js');
+    await execute('atacarPlayer');
 }
 
 async function waitAtkCooldown(): Promise<void> {
-    await execute('src/injected/objectives/menusLaterais/getAtkCooldown.js');
+    await execute('getAtkCooldown');
     let cooldown = await getFromStorage<Cooldown>("atkCooldown");
 
     console.log(`Esperando cooldown: ${cooldown.minutos}:${cooldown.segundos}`);
@@ -48,6 +48,6 @@ async function waitAtkCooldown(): Promise<void> {
 }
 
 async function checarHP(): Promise<void> {
-    await execute('src/injected/objectives/menusLaterais/getHP.js');
+    await execute('getHP');
     let percentHP = await getFromStorage<number>("percentHP");
 }
