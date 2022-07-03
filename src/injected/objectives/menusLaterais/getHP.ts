@@ -1,4 +1,5 @@
 import { getByXpath, log, logError, setStorage } from "../../../services/background_utils";
+import { Log, TipoLog } from "../../../services/model/log";
 
 (async () => {
     try {     
@@ -6,7 +7,7 @@ import { getByXpath, log, logError, setStorage } from "../../../services/backgro
         let percentHP = elemento.innerHTML;
 
         await setStorage("percentHP", percentHP.slice(0, percentHP.length - 1));
-        await log({type: "info", message: `Valor percentual do HP obtido: ${percentHP}`});
+        await log(new Log(TipoLog.info, `Valor percentual de HP: ${percentHP}`));
 
     } catch (e) {
         await logError(e);
