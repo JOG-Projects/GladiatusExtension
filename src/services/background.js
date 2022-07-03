@@ -19,6 +19,14 @@ async function handleMessage(request, sender, sendResponse) {
         await start();
     }
 
+    if (request.type === "info") {
+        console.log(request.message)
+    }
+
+    if (request.type === "error") {
+        console.error(request.message)
+    }
+
     sendResponse();
 }
 

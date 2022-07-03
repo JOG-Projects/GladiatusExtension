@@ -1,7 +1,8 @@
 (async () => {
     try {
-        await clickAndWait('//*[@id="submenu1"]/a[6]', 1000)
+        await clickAndWait('//*[@id="submenu1"]/a[6]', 1000);
+        await log({type: "info", message: "Aberto aba bens gerais"});
     } catch (e) {
-        console.error(e)
+        await logError(e);
     }
 })();
