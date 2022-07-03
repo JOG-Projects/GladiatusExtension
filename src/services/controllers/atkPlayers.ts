@@ -33,10 +33,11 @@ async function attackPlayers(players: string[]): Promise<void> {
 async function attackPlayer(player: string): Promise<void> {
     console.log("Abrindo arena");
     await execute('abrirArena');
-
+    await timeout(1000);
     await setStorage("currentAtkPlayer", player);
     console.log(`Atacando jogador: ${player}`);
     await execute('atacarPlayer');
+    await timeout(1000)
 }
 
 async function waitAtkCooldown(): Promise<void> {

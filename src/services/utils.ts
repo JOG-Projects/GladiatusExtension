@@ -80,6 +80,13 @@ export async function doWork(file: string, work: () => Promise<void>) {
     }
 }
 
+export function registerListeners(elements: { id: string, default: any }[]) {
+    for (let element of elements) {
+        let html = document.getElementById(element.id) as HTMLInputElement;
+        html.onchange = async () => await setStorage(element.id, html.value ?? element.default);
+    }
+}
+
 async function promisifyExecute(file: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {

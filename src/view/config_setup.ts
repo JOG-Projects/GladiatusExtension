@@ -1,7 +1,7 @@
-const inputPlayers = document.getElementById("atkListPlayers") as HTMLTextAreaElement;
+import { registerListeners } from "../services/utils";
 
-chrome.storage.sync.get("atkListPlayers", (value) => inputPlayers.value = value.atkListPlayers ?? "");
-
-inputPlayers.onchange = () => {
-    chrome.storage.sync.set({ atkListPlayers: inputPlayers.value });
-}
+registerListeners(
+    [
+        { id: 'atkListPlayers', default: "" },
+        { id: 'delay', default: 1000 }
+    ]);
