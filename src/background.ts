@@ -1,6 +1,5 @@
 import { initAlarms, handleAlarm } from "./services/alarms.js";
 import { setStorage } from "./services/background_utils.js";
-import { equiparPreset } from "./services/objectives/equiparPreset.js";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -8,7 +7,7 @@ chrome.alarms.onAlarm.addListener(handleAlarm);
 
 // chrome.runtime.onStartup.addListener(initAlarm) Para registrar os alarmes ao iniciar o navegador.
 
-async function handleMessage(request, sender, sendResponse) {
+async function handleMessage(request: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
     console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
     console.log("request type: " + request.type);
 
@@ -39,7 +38,7 @@ async function start() {
 }
 
 async function setTabId() {
-    let tabs = await new Promise((resolve, reject) => {
+    let tabs = await new Promise<chrome.tabs.Tab[]>((resolve) => {
         chrome.tabs.query({ url: "https://*.gladiatus.gameforge.com/*" }, (tabs) => resolve(tabs))
     });
 
