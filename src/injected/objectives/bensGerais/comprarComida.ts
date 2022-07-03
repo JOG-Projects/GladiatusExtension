@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getByXpath } from "../../../services/background_utils";
 
 let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');

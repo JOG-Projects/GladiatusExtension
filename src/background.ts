@@ -1,6 +1,6 @@
-import { initAlarms, handleAlarm } from "./services/alarms.js";
-import { setStorage } from "./services/background_utils.js";
-import { TipoLog } from "./services/model/tipoLog.js";
+import { initAlarms, handleAlarm } from "./services/alarms";
+import { setStorage } from "./services/background_utils";
+import { TipoLog } from "./services/model/tipoLog";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 

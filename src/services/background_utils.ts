@@ -54,13 +54,17 @@ export function tomorrowMidnight(): number {
     return date.getTime();
 }
 
-export function getByXpath<T>(xpath: string): T {
-    return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null,).singleNodeValue as T
+export function getByXpath<T extends Node>(xpath: string): T {
+    let element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null,).singleNodeValue;
+    if (!element) {
+        throw new Error(`Element ${element} wasn't found`);
+    }
+    return element as T
 }
 
 export async function clickAndWait(xpath: string, ms?: number): Promise<void> {
     let botao = getByXpath<HTMLButtonElement>(xpath);
-    botao.click();
+    botao?.click();
     await timeout(ms ?? 0);
 }
 
