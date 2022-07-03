@@ -1,11 +1,10 @@
 export async function execute(file) {
     var tabId = await getFromStorage("tabId");
     await new Promise(function (resolve, reject) {
-        chrome.scripting.executeScript(
-            {
-                target: { tabId: tabId, allFrames: true },
-                files: ['src/injected/injected_utils.js', file]
-            }, resolve)
+        chrome.tabs.executeScript({
+            tabId: tabId,
+            file: file
+        }, resolve)
     });
 }
 

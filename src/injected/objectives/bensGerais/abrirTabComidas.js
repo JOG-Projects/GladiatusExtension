@@ -1,7 +1,8 @@
 (async () => {
     try {
-        await clickAndWait('//*[@id="shop_nav"]/a[1]/div', 1000)
+        await clickAndWait('//*[@id="shop_nav"]/a[1]/div', 1000);
+        await log({type: "info", message: "Aberta tab de comidas do vendedor"});
     } catch (e) {
-        console.error(e)
+        await logError(e);
     }
 })();
