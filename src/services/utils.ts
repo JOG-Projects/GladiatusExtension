@@ -83,8 +83,8 @@ export async function doWork(file: string, work: () => Promise<void>) {
 export async function registerListeners(elements: { id: string, default: any }[]) {
     for (let element of elements) {
         let html = document.getElementById(element.id) as HTMLInputElement;
-        html.onchange = async () => await setStorage(element.id, newValue)
         let newValue = (await getFromStorage<any>(element.id)) ?? element.default;
+        html.onchange = async () => await setStorage(element.id, html.value)
         html.value = newValue;
     }
 }
