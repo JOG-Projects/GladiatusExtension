@@ -12,8 +12,8 @@ const injectedScripts = injectedDirectories.map(p => getAllItems(p)).flat()
 
 const userEntries =
 {
-   config: path.resolve(__dirname, "..", "src", "view", "config_setup.ts"),
-   popup: path.resolve(__dirname, "..", "src", "view", "popup_setup.ts"),
+   config_setup: path.resolve(__dirname, "..", "src", "view", "config_setup.ts"),
+   popup_setup: path.resolve(__dirname, "..", "src", "view", "popup_setup.ts"),
    background: path.resolve(__dirname, "..", "src", "background.ts"),
 };
 

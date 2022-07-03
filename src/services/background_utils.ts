@@ -11,13 +11,12 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 }
 
 export async function execute(file: string): Promise<void> {
-    var tabId = await getFromStorage("tabId");
+    var tabId = await getFromStorage<number>("tabId");
     await new Promise<any[]>(function (resolve, reject) {
-        let sexo = {
-            tabId: tabId,
+        let details: chrome.tabs.InjectDetails = {
             file: `${file}.js`
         };
-        chrome.tabs.executeScript(sexo, resolve)
+        chrome.tabs.executeScript(tabId, details, resolve)
     });
 }
 
@@ -68,9 +67,9 @@ export async function clickAndWait(xpath: string, ms?: number): Promise<void> {
     await timeout(ms ?? 0);
 }
 
-export async function log(nivel: TipoLog, mensagem: string): Promise<void> {
-    await new Promise<void>(function (resolve, reject) {
-        chrome.runtime.sendMessage(log, resolve)
+export async function log(level: TipoLog, message: string): Promise<void> {
+    await new Promise<void>(function (resolve) {
+        chrome.runtime.sendMessage({ type: "log", log: { level: level, message: message } }, resolve)
     });
 }
 

@@ -15,7 +15,7 @@ async function startAtkAlarm(): Promise<void> {
     let diaHoje = new Date().getDate();
 
     if (diaUltimaRun == diaHoje && qtdAtk == 5) {
-        await setTomorrowAlarm(runCooldown);
+        setTomorrowAlarm(runCooldown);
         return;
     }
 
@@ -44,7 +44,7 @@ export async function handleAlarm(alarm: chrome.alarms.Alarm): Promise<void> {
         let diaHoje = new Date().getDate();
 
         if (diaUltimaRun == diaHoje && qtdAtk == 5) {
-            await setTomorrowAlarm(runCooldown);
+            setTomorrowAlarm(runCooldown);
         }
     }
 }

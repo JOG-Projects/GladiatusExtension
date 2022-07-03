@@ -12,7 +12,9 @@
     "storage",
     "tabCapture",
     "background",
-    "alarms"
+    "alarms",
+    "background",
+    "*://*.gladiatus.gameforge.com/game/*"
   ],
   "background": {
     "scripts": [

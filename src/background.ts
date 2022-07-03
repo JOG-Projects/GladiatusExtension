@@ -20,8 +20,9 @@ async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSe
     }
 
     if (request.type === "log") {
-        let output = request["log"].level == TipoLog.info ? console.log : console.error;
-        output(request.message)
+        let log = request["log"] as { level: TipoLog, message: string };
+        let output = log.level == TipoLog.info ? console.log : console.error;
+        output(log.message)
     }
 
     sendResponse();
