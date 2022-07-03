@@ -29,6 +29,6 @@ function log(log) {
     return new Promise((resolve, reject) => chrome.runtime.sendMessage("GTB", log, null, resolve));
 }
 
-async function logError() {
+async function logError(e) {
     await log({type:"error", message: `${e}`})
 }
