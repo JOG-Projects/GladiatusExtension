@@ -2,7 +2,7 @@ import { getByXpath, setStorage, log, doWork } from "../../services/utils";
 import { Cooldown } from "../../services/model/cooldown";
 import { TipoLog } from "../../services/model/tipoLog";
 
-doWork("getAtkCooldown", async () => {
+doWork("getAtkCooldown", 0, async () => {
     let elemento = getByXpath<HTMLElement>('//*[@id="cooldown_bar_text_arena"]');
     let textCooldown = elemento.innerHTML;
 

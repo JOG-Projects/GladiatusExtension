@@ -1,7 +1,5 @@
-import { clickAndWait, doWork, log } from "../../services/utils";
-import { TipoLog } from "../../services/model/tipoLog";
+import { clickAndWait, doWork } from "../../services/utils";
 
-doWork("abrirArena", async () => {
-    await clickAndWait('//*[@id="cooldown_bar_arena"]/a', 2500);
-    await log(TipoLog.info, "Arena aberta");
+doWork("abrirArena", 2500, async () => {
+    clickAndWait('//*[@id="cooldown_bar_arena"]/a');
 });

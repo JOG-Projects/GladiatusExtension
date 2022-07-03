@@ -1,7 +1,5 @@
-import { clickAndWait, doWork, log } from "../../services/utils";
-import { TipoLog } from "../../services/model/tipoLog";
+import { clickAndWait, doWork } from "../../services/utils";
 
-doWork("abrirBensGerais", async () => {
-    await clickAndWait('//*[@id="submenu1"]/a[6]', 1000);
-    await log(TipoLog.info, "Aberto aba bens gerais");
+doWork("abrirBensGerais", 1000, async () => {
+    clickAndWait('//*[@id="submenu1"]/a[6]');
 });

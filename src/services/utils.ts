@@ -56,10 +56,9 @@ export function getByXpath<T extends Node>(xpath: string): T {
     return element as T
 }
 
-export async function clickAndWait(xpath: string, ms?: number): Promise<void> {
+export function clickAndWait(xpath: string): void {
     let botao = getByXpath<HTMLButtonElement>(xpath);
     botao.click();
-    await timeout(ms ?? 0);
 }
 
 export async function log(level: TipoLog, message: string): Promise<void> {
@@ -70,22 +69,23 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function doWork(file: string, work: () => Promise<void>) {
+export async function doWork(file: string, ms: number, work: () => Promise<void>) {
     try {
         await work();
     } catch (e) {
         await logError(e);
     }
     finally {
-        await resolvePromise(file);
+        await resolvePromise(file, ms);
     }
 }
 
 async function promisifyExecute(file: string) {
     await new Promise<void>(resolve => {
-        let listener = (message: any) => {
-            if (message === file) {
+        let listener = async (message: { type: string, ms: number }) => {
+            if (message.type === file) {
                 chrome.runtime.onMessage.removeListener(listener);
+                await timeout(message.ms)
                 resolve();
             }
         }
@@ -94,6 +94,6 @@ async function promisifyExecute(file: string) {
     );
 }
 
-async function resolvePromise(file: string) {
-    await chrome.runtime.sendMessage(file);
+async function resolvePromise(file: string, ms: number) {
+    await chrome.runtime.sendMessage({ type: file, ms: ms });
 }
