@@ -24,7 +24,6 @@ export async function atkPlayers() {
 async function attackPlayer(player) {
     console.log("Abrindo arena");
     await execute('src/injected/objectives/arena/abrirArena.js');
-    console.log("Arena aberta")
 
     await setStorage("currentAtkPlayer", player);
     console.log(`Atacando jogador: ${player}`);
