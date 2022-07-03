@@ -30,7 +30,7 @@ jobs:
         npm install
         npm run build
         cd dist
-        zip -r $FILE_NAME ../dist
+        zip -r ${{ env.FILE_NAME }} ../dist
         
     - name: Create Release
       id: create_release
@@ -50,6 +50,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: $FILE_NAME
-        asset_name: $FILE_NAME
+        asset_path: ${{ env.FILE_NAME }}
+        asset_name: ${{ env.FILE_NAME }}
         asset_content_type: application/zip
