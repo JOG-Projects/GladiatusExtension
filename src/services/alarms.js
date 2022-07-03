@@ -1,5 +1,5 @@
 import { createAlarm, getFromStorage, setStorage } from "./background_utils.js";
-import { initAttackPlayers } from "./objectives/atkPlayers.js";
+import { initAttackPlayers } from "./controllers/atkPlayers.js";
 
 async function startAtkAlarm() {
     let runCooldown = (await getFromStorage("runCooldown")) ?? 25;

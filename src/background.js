@@ -1,6 +1,6 @@
-import { initAlarms, handleAlarm } from "./alarms.js";
-import { setStorage } from "./background_utils.js";
-import { equiparPreset } from "./objectives/equiparPreset.js";
+import { initAlarms, handleAlarm } from "./services/alarms.js";
+import { setStorage } from "./services/background_utils.js";
+import { equiparPreset } from "./services/objectives/equiparPreset.js";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
