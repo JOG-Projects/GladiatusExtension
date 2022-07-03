@@ -30,7 +30,7 @@ jobs:
         npm install
         npm run build
         cd dist
-        zip -r ${{ FILE_NAME }} ../dist
+        zip -r $FILE_NAME ../dist
         
     - name: Create Release
       id: create_release
