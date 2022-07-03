@@ -48,7 +48,7 @@ async function setTabId(): Promise<void> {
         throw "Cant find gladiatus tab";
     }
 
-    console.log(`"Found tab id: ${tab.id}`)
+    console.log(`Found tab id: ${tab.id}`)
 
     await setStorage("tabId", tab.id);
 }
