@@ -36,9 +36,28 @@ export function createAlarm(alarmName, unixTime, minutesCooldown) {
     });
 }
 
-export function tomorrowMidnight() {
+export function tomorrowMidnight(): number {
     let date = new Date()
     date.setDate(date.getDate() + 1)
     date.setHours(0, 0, 0, 0)
     return date.getTime();
+}
+
+export function getByXpath(xpath: string): Node | null {
+    return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null,).singleNodeValue
+}
+
+export async function clickAndWait(xpath: string, ms: number) {
+    getByXpath(xpath).click();
+    await timeout(ms ?? 0)
+}
+
+export function log(log) {
+    return new Promise(function (resolve, reject) {
+        chrome.runtime.sendMessage(log, resolve)
+    });
+}
+
+export async function logError(e) {
+    await log({ type: "error", message: `${e}` })
 }

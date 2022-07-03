@@ -1,4 +1,4 @@
-import { execute } from "../background_utils.js";
+import { execute } from "../background_utils";
 
 export async function equiparPreset() {
     await execute('src/injected/objectives/vistaGeral/abrirVistaGeral.js');

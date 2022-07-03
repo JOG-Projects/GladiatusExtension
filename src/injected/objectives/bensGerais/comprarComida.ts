@@ -1,8 +1,10 @@
-let inventarioVendedor = getByXpath('//*[@id="shop"]');
-let inventarioPlayer = getByXpath('//*[@id="inv"]');
+import { getByXpath } from "../../../services/background_utils";
+
+let inventarioVendedor = getByXpath('//*[@id="shop"]') as HTMLElement;
+let inventarioPlayer = getByXpath('//*[@id="inv"]') as HTMLElement;
 
 //verificar comidas compráveis
-let slotsVendedor = Array.from(inventarioVendedor.children)
+let slotsVendedor = Array.from(inventarioVendedor.children);
 let comidasCompraveis = slotsVendedor.filter(x => x.dataset.tooltip && !x.dataset.tooltip.contains('icon_rubies'));
 
 //array slots vazios
@@ -12,7 +14,7 @@ let slotsVazios = slots.filter(x => x.className=="ui-droppable grid-droparea");
 
 inventarioVendedor.addEventListener('dragstart', dragStart);
 
-function dragStart(e) {
+function dragStart(e: DragEvent | null) {
     e.dataTransfer.setData('text/plain', e.target.id);
     setTimeout(() => {
         e.target.classList.add('hide');

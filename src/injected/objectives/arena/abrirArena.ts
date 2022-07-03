@@ -1,3 +1,5 @@
+import { clickAndWait, log, logError } from "../../../services/background_utils";
+
 (async () => {
     try {
         await clickAndWait('//*[@id="cooldown_bar_arena"]/a', 2500);

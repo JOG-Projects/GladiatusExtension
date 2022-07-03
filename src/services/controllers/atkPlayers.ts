@@ -1,4 +1,5 @@
-import { execute, setStorage, getFromStorage, timeout } from "../background_utils.js";
+import { execute, setStorage, getFromStorage, timeout } from "../background_utils";
+import { Cooldown } from "../model/cooldown";
 
 export async function initAttackPlayers() {
     let players = await getAllPlayers();
@@ -9,9 +10,9 @@ export async function initAttackPlayers() {
 }
 
 async function getAllPlayers() {
-    let playersText = await getFromStorage("atkListPlayers");
+    let playersText = await getFromStorage("atkListPlayers") as string;
 
-    if (!playersText || playersText.lenght == 0) {
+    if (!playersText || playersText.length == 0) {
         throw "Sem players configurados para atacar";
     }
 
@@ -19,7 +20,7 @@ async function getAllPlayers() {
     return players;
 }
 
-async function attackPlayers(players) {
+async function attackPlayers(players: string[]) {
     for (let player of players) {
         await attackPlayer(player);
 
@@ -29,7 +30,7 @@ async function attackPlayers(players) {
     }
 }
 
-async function attackPlayer(player) {
+async function attackPlayer(player: string) {
     console.log("Abrindo arena");
     await execute('src/injected/objectives/arena/abrirArena.js');
 
@@ -40,13 +41,13 @@ async function attackPlayer(player) {
 
 async function waitAtkCooldown() {
     await execute('src/injected/objectives/menusLaterais/getAtkCooldown.js');
-    let cooldown = await getFromStorage("atkCooldown");
+    let cooldown = await getFromStorage("atkCooldown") as Cooldown;
 
-    console.log(`Esperando cooldown: ${cooldown.minutes}:${cooldown.seconds}`);
-    await timeout((cooldown.minutes * 60 + cooldown.seconds) * 1000);
+    console.log(`Esperando cooldown: ${cooldown.minutos}:${cooldown.segundos}`);
+    await timeout((cooldown.minutos * 60 + cooldown.segundos) * 1000);
 }
 
 async function checarHP() {
     await execute('src/injected/objectives/menusLaterais/getHP.js');
-    let percentHP = await getFromStorage("percentHP");
+    let percentHP = await getFromStorage("percentHP") as number;
 }

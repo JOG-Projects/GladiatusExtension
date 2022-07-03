@@ -1,3 +1,5 @@
+import { clickAndWait, log, logError } from "../../../services/background_utils";
+
 (async () => {
     try {
         await clickAndWait('//*[@id="shop_nav"]/a[1]/div', 1000);
