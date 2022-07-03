@@ -1,17 +1,25 @@
 import { execute, setStorage, getFromStorage, timeout } from "../background_utils.js";
 
-export async function atkPlayers() {
+export async function initAttackPlayers() {
+    let players = await getAllPlayers();
+
+    console.log(`iniciando ataque aos players ${players}`)
+
+    await attackPlayers(players);
+}
+
+async function getAllPlayers() {
     let playersText = await getFromStorage("atkListPlayers");
 
     if (!playersText || playersText.lenght == 0) {
-        console.error("Sem players configurados para atacar")
-        return
+        throw "Sem players configurados para atacar";
     }
 
-    let players = playersText.split("\n")
+    let players = playersText.split("\n");
+    return players;
+}
 
-    console.log(`iniciando ataque aos players ${playersText}`)
-
+async function attackPlayers(players) {
     for (let player of players) {
         await attackPlayer(player);
 
@@ -41,6 +49,4 @@ async function waitAtkCooldown() {
 async function checarHP() {
     await execute('src/injected/objectives/menusLaterais/getHP.js');
     let percentHP = await getFromStorage("percentHP");
-
-    console.log(`Percentual de HP: ${percentHP}%`);
 }
