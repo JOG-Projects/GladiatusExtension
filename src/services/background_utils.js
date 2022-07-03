@@ -3,7 +3,7 @@ export async function execute(file) {
     await new Promise(function (resolve, reject) {
         chrome.scripting.executeScript(
             {
-                target: { tabId: tabId },
+                target: { tabId: tabId, allFrames: true },
                 files: ['src/injected/injected_utils.js', file]
             }, resolve)
     });
