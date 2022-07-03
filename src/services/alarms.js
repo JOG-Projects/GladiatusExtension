@@ -6,25 +6,25 @@ async function startAtkAlarm() {
     let ultimaRunUnix = (await getFromStorage("ultimaRunCompleta")) ?? Date.now();
     let qtdAtk = (await getFromStorage("qtdAtks")) ?? 0;
 
-    console.log(`qtdAtk: ${qtdAtk}`)
-    console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`)
-    console.log(`runCooldown: ${runCooldown}`)
+    console.log(`qtdAtk: ${qtdAtk}`);
+    console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`);
+    console.log(`runCooldown: ${runCooldown}`);
 
-    let diaUltimaRun = new Date(ultimaRunUnix).getDate()
+    let diaUltimaRun = new Date(ultimaRunUnix).getDate();
 
-    let diaHoje = new Date().getDate()
+    let diaHoje = new Date().getDate();
 
     if (diaUltimaRun == diaHoje && qtdAtk == 5) {
         await setTomorrowAlarm(runCooldown);
         return;
     }
 
-    console.log(`Setting up alarm to ${new Date(ultimaRunUnix)}`)
+    console.log(`Setting up alarm to ${new Date(ultimaRunUnix)}`);
     await createAlarm("atkRun", ultimaRunUnix + 1000, runCooldown);
 }
 
 export async function handleAlarm(alarm) {
-    console.log(`Disparado alarme: ${alarm.name}`)
+    console.log(`Disparado alarme: ${alarm.name}`);
     if (alarm.name === "atkRun") {
         await atkPlayers();
 
@@ -32,16 +32,16 @@ export async function handleAlarm(alarm) {
         let qtdAtk = (await getFromStorage("qtdAtks")) ?? 0;
         let runCooldown = (await getFromStorage("runCooldown")) ?? 25;
 
-        console.log(`qtdAtk: ${qtdAtk}`)
-        console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`)
-        console.log(`runCooldown: ${runCooldown}`)
+        console.log(`qtdAtk: ${qtdAtk}`);
+        console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`);
+        console.log(`runCooldown: ${runCooldown}`);
 
-        await setStorage("ultimaRunCompleta", Date.now())
-        await setStorage("qtdAtks", ++qtdAtk)
+        await setStorage("ultimaRunCompleta", Date.now());
+        await setStorage("qtdAtks", ++qtdAtk);
 
-        let diaUltimaRun = new Date(ultimaRunUnix).getDate()
+        let diaUltimaRun = new Date(ultimaRunUnix).getDate();
 
-        let diaHoje = new Date().getDate()
+        let diaHoje = new Date().getDate();
 
         if (diaUltimaRun == diaHoje && qtdAtk == 5) {
             await setTomorrowAlarm(runCooldown);
@@ -56,5 +56,5 @@ async function setTomorrowAlarm(runCooldown) {
 }
 
 export async function initAlarms() {
-    await startAtkAlarm()
+    await startAtkAlarm();
 }
