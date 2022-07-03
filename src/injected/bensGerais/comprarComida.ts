@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { getByXpath } from "../../services/background_utils";
+import { getByXpath } from "../../services/utils";
 
 let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
 let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');

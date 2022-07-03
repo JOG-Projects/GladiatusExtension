@@ -12,26 +12,21 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 
 export async function execute(file: string): Promise<void> {
     var tabId = await getFromStorage<number>("tabId");
-    await new Promise<any[]>(function (resolve) {
-        let details: chrome.tabs.InjectDetails = {
-            file: `${file}.js`
-        };
-        chrome.tabs.executeScript(tabId, details, resolve)
-    });
+    let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
+    chrome.tabs.executeScript(tabId, details);
+    await promisifyExecute(file);
 }
 
-export function getFromStorage<T>(key: string): Promise<T> {
-    return new Promise<T>(function (resolve) {
-        chrome.storage.sync.get(key, (value) => resolve(value[key] as T))
-    });
+export async function getFromStorage<T>(key: string): Promise<T> {
+    let value = await new Promise<any>(resolve => chrome.storage.sync.get(key, value => resolve(value)))
+    return value[key] as T
 }
 
 export async function setStorage(key: string, value: any): Promise<void> {
-    await new Promise<void>(function (resolve) {
-        let obj = {} as IMessage
-        obj[key] = value
-        chrome.storage.sync.set(obj, resolve)
-    });
+    let obj = {} as IMessage
+    obj[key] = value
+
+    await chrome.storage.sync.set(obj)
 }
 
 export async function timeout(ms: number): Promise<void> {
@@ -63,16 +58,42 @@ export function getByXpath<T extends Node>(xpath: string): T {
 
 export async function clickAndWait(xpath: string, ms?: number): Promise<void> {
     let botao = getByXpath<HTMLButtonElement>(xpath);
-    botao?.click();
+    botao.click();
     await timeout(ms ?? 0);
 }
 
 export async function log(level: TipoLog, message: string): Promise<void> {
-    await new Promise<void>(function (resolve) {
-        chrome.runtime.sendMessage({ type: "log", log: { level: level, message: message } }, resolve)
-    });
+    await chrome.runtime.sendMessage({ type: "log", log: { level: level, message: message } })
 }
 
 export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
+}
+
+export async function resolvePromise(file: string) {
+    await chrome.runtime.sendMessage(file);
+}
+
+export async function doWork(file: string, work: () => Promise<void>) {
+    try {
+        await work();
+    } catch (e) {
+        await logError(e);
+    }
+    finally {
+        await resolvePromise(file);
+    }
+}
+
+async function promisifyExecute(file: string) {
+    await new Promise<void>(resolve => {
+        let listener = (message: any) => {
+            if (message === file) {
+                chrome.runtime.onMessage.removeListener(listener);
+                resolve();
+            }
+        }
+        chrome.runtime.onMessage.addListener(listener);
+    }
+    );
 }
