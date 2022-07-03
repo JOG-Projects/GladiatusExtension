@@ -1,5 +1,4 @@
-const inputPlayers = document.getElementById("atkListPlayers")
-
+const inputPlayers = document.getElementById("atkListPlayers") as HTMLTextAreaElement;
 
 chrome.storage.sync.get("atkListPlayers", (value) => inputPlayers.value = value.atkListPlayers ?? "");
 

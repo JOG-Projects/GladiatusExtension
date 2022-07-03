@@ -1,20 +1,21 @@
-export async function execute(file) {
+export async function execute(file: string) {
     var tabId = await getFromStorage("tabId");
     await new Promise(function (resolve, reject) {
-        chrome.tabs.executeScript({
+        let sexo = {
             tabId: tabId,
             file: file
-        }, resolve)
+        };
+        chrome.tabs.executeScript(sexo, resolve)
     });
 }
 
-export function getFromStorage(key) {
+export function getFromStorage(key: string) {
     return new Promise(function (resolve, reject) {
         chrome.storage.sync.get(key, (value) => resolve(value[key]))
     });
 }
 
-export function setStorage(key, value) {
+export function setStorage(key: string, value: any) {
     return new Promise(function (resolve, reject) {
         let obj = {}
         obj[key] = value
@@ -22,12 +23,12 @@ export function setStorage(key, value) {
     });
 }
 
-export function timeout(ms) {
+export function timeout(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function createAlarm(alarmName, unixTime, minutesCooldown) {
-    return new Promise((resolve, reject) => {
+export function createAlarm(alarmName: string, unixTime: number, minutesCooldown: number) {
+    return new Promise<void>((resolve) => {
         chrome.alarms.create(alarmName, {
             periodInMinutes: minutesCooldown,
             when: unixTime,
