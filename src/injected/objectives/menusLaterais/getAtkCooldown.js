@@ -9,7 +9,9 @@
         let seconds = Number(timeSegments[2] ?? 0)
 
         await setStorage("atkCooldown", { seconds: seconds, minutes: minutes })
+        await log({type: "info", message: `Valor do cooldown obtido: ${textCooldown}`})
+
     } catch (e) {
-        console.error(e)
+        await log({type: "error", message: `${e}`})
     }
 })();
