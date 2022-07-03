@@ -18,7 +18,8 @@
     "storage",
     "tabCapture",
     "background",
-    "scripting"
+    "scripting",
+    "alarms"
   ],
   "background": {
     "service_worker": "src/services/background.js",

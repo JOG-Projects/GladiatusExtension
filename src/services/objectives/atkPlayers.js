@@ -12,27 +12,36 @@ export async function atkPlayers() {
 
     console.log(`iniciando ataque aos players ${playersText}`)
 
-    for (let i in players) {
-        await attackPlayer(players[i]);
+    for (let player of players) {
+        await attackPlayer(player);
+
+        await checarHP();
+
+        await waitAtkCooldown();
     }
 }
 
 async function attackPlayer(player) {
     console.log("Abrindo arena");
     await execute('src/injected/objectives/arena/abrirArena.js');
+    console.log("Arena aberta")
 
     await setStorage("currentAtkPlayer", player);
-
     console.log(`Atacando jogador: ${player}`);
     await execute('src/injected/objectives/arena/atacarPlayer.js');
-    
-    await getTimeout();
-    
-    let timeout = getFromStorage("timeout");
+}
 
-    console.log(`Esperando cooldow: ${timeout}`);
-    await timeout(timeout);
+async function waitAtkCooldown() {
+    await execute('src/injected/objectives/menusLaterais/getAtkCooldown.js');
+    let cooldown = await getFromStorage("atkCooldown");
 
+    console.log(`Esperando cooldown: ${cooldown.minutes}:${cooldown.seconds}`);
+    await timeout((cooldown.minutes * 60 + cooldown.seconds) * 1000);
+}
 
-    
+async function checarHP() {
+    await execute('src/injected/objectives/menusLaterais/getHP.js');
+    let percentHP = await getFromStorage("percentHP");
+
+    console.log(`Percentual de HP: ${percentHP}%`);
 }
