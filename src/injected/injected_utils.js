@@ -24,3 +24,7 @@ function setStorage(key, value) {
         chrome.storage.sync.set(obj, resolve);
     });
 }
+
+function log(log) {
+    return new Promise((resolve, reject) => chrome.runtime.sendMessage("GTB", log, null, resolve));
+}
