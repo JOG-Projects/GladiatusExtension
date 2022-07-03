@@ -1,7 +1,7 @@
 import { getByXpath } from "../../../services/background_utils";
 
-let inventarioVendedor = getByXpath('//*[@id="shop"]') as HTMLElement;
-let inventarioPlayer = getByXpath('//*[@id="inv"]') as HTMLElement;
+let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
+let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
 
 //verificar comidas compráveis
 let slotsVendedor = Array.from(inventarioVendedor.children);
@@ -11,10 +11,9 @@ let comidasCompraveis = slotsVendedor.filter(x => x.dataset.tooltip && !x.datase
 let slots = Array.from(inventarioPlayer.children);
 let slotsVazios = slots.filter(x => x.className=="ui-droppable grid-droparea");
 
-
 inventarioVendedor.addEventListener('dragstart', dragStart);
 
-function dragStart(e: DragEvent | null) {
+function dragStart(e: DragEvent) {
     e.dataTransfer.setData('text/plain', e.target.id);
     setTimeout(() => {
         e.target.classList.add('hide');

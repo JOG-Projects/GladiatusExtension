@@ -1,10 +1,10 @@
 import { createAlarm, getFromStorage, setStorage, tomorrowMidnight } from "./background_utils";
 import { initAttackPlayers } from "./controllers/atkPlayers";
 
-async function startAtkAlarm() {
-    let runCooldown = (await getFromStorage("runCooldown") as number) ?? 25;
-    let ultimaRunUnix = (await getFromStorage("ultimaRunCompleta") as number) ?? Date.now();
-    let qtdAtk = (await getFromStorage("qtdAtks")) ?? 0;
+async function startAtkAlarm(): Promise<void> {
+    let runCooldown = (await getFromStorage<number>("runCooldown")) ?? 25;
+    let ultimaRunUnix = (await getFromStorage<number>("ultimaRunCompleta")) ?? Date.now();
+    let qtdAtk = (await getFromStorage<number>("qtdAtks")) ?? 0;
 
     console.log(`qtdAtk: ${qtdAtk}`);
     console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`);
@@ -20,17 +20,17 @@ async function startAtkAlarm() {
     }
 
     console.log(`Setting up alarm to ${new Date(ultimaRunUnix)}`);
-    await createAlarm("atkRun", ultimaRunUnix + 1000, runCooldown);
+    createAlarm("atkRun", ultimaRunUnix + 1000, runCooldown);
 }
 
-export async function handleAlarm(alarm: chrome.alarms.Alarm) {
+export async function handleAlarm(alarm: chrome.alarms.Alarm): Promise<void> {
     console.log(`Disparado alarme: ${alarm.name}`);
     if (alarm.name === "atkRun") {
         await initAttackPlayers();
 
-        let ultimaRunUnix = (await getFromStorage("ultimaRunCompleta") as number) ?? Date.now();
-        let qtdAtk = (await getFromStorage("qtdAtks") as number) ?? 0;
-        let runCooldown = (await getFromStorage("runCooldown") as number) ?? 25;
+        let ultimaRunUnix = (await getFromStorage<number>("ultimaRunCompleta")) ?? Date.now();
+        let qtdAtk = (await getFromStorage<number>("qtdAtks")) ?? 0;
+        let runCooldown = (await getFromStorage<number>("runCooldown")) ?? 25;
 
         console.log(`qtdAtk: ${qtdAtk}`);
         console.log(`ultimaRun: ${new Date(ultimaRunUnix)}`);
@@ -49,12 +49,12 @@ export async function handleAlarm(alarm: chrome.alarms.Alarm) {
     }
 }
 
-async function setTomorrowAlarm(runCooldown: number) {
+function setTomorrowAlarm(runCooldown: number): void {
     let amanha = tomorrowMidnight();
     console.log(`Finalizado runs de hoje, alarme programado para ${new Date(amanha)}`);
-    await createAlarm("atkRun", amanha, runCooldown);
+    createAlarm("atkRun", amanha, runCooldown);
 }
 
-export async function initAlarms() {
+export async function initAlarms(): Promise<void> {
     await startAtkAlarm();
 }

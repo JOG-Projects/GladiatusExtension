@@ -1,5 +1,6 @@
 import { initAlarms, handleAlarm } from "./services/alarms.js";
 import { setStorage } from "./services/background_utils.js";
+import { TipoLog } from "./services/model/tipoLog.js";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -7,7 +8,7 @@ chrome.alarms.onAlarm.addListener(handleAlarm);
 
 // chrome.runtime.onStartup.addListener(initAlarm) Para registrar os alarmes ao iniciar o navegador.
 
-async function handleMessage(request: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
+async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void): Promise<void> {
     console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
     console.log("request type: " + request.type);
 
@@ -18,18 +19,15 @@ async function handleMessage(request: any, sender: chrome.runtime.MessageSender,
         await start();
     }
 
-    if (request.type === "info") {
-        console.log(request.message)
-    }
-
-    if (request.type === "error") {
-        console.error(request.message)
+    if (request.type === "log") {
+        let output = request["log"].level == TipoLog.info ? console.log : console.error;
+        output(request.message)
     }
 
     sendResponse();
 }
 
-async function start() {
+async function start(): Promise<void> {
     await setTabId()
 
     //await equiparPreset()
@@ -37,7 +35,7 @@ async function start() {
     await initAlarms();
 }
 
-async function setTabId() {
+async function setTabId(): Promise<void> {
     let tabs = await new Promise<chrome.tabs.Tab[]>((resolve) => {
         chrome.tabs.query({ url: "https://*.gladiatus.gameforge.com/*" }, (tabs) => resolve(tabs))
     });
