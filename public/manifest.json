@@ -1,0 +1,24 @@
+{
+  "name": "Gladiatus Tatanka BOT",
+  "version": "2",
+  "description": "Extension for automating Gladiatus tasks",
+  "browser_action": {
+    "default_icon": "resource/img/icon_items_inactive.jpg",
+    "default_popup": "view/popup.html",
+    "default_title": "Click Me"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "tabCapture",
+    "background",
+    "alarms"
+  ],
+  "background": {
+    "scripts": [
+      "src/services/background.js"
+    ],
+    "persistent": true
+  },
+  "manifest_version": 2
+}
