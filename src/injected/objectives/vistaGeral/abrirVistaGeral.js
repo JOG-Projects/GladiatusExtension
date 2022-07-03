@@ -1,7 +1,9 @@
 (async () => {
     try {
-        await clickAndWait('//*[@id="mainmenu"]/a[1]', 1000)
+        await clickAndWait('//*[@id="mainmenu"]/a[1]', 1000);
+        await log({type: "info", message: 'Abrindo vista geral'});
+
     } catch (e) {
-        console.error(e)
+        await logError(e);
     }
 })();

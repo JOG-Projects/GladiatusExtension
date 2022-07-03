@@ -1,7 +1,9 @@
 (async () => {
     try {
-        await clickAndWait('//*[@id="char"]/div[10]/div', 1000)
+        await clickAndWait('//*[@id="char"]/div[10]/div', 1000);
+        await log({type: "info", message: 'Selecionando equipamento'});
+
     } catch (e) {
-        console.error(e)
+        await logError(e);
     }
 })();
