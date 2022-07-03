@@ -4,7 +4,7 @@
   "description": "Extension for automating Gladiatus tasks",
   "browser_action": {
     "default_icon": "resource/img/icon_items_inactive.jpg",
-    "default_popup": "view/popup.html",
+    "default_popup": "popup.html",
     "default_title": "Click Me"
   },
   "permissions": [

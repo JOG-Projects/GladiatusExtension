@@ -13,7 +13,7 @@ async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSe
     console.log("request type: " + request.type);
 
     if (request.type === "config")
-        chrome.tabs.create({ url: "./view/config.html", selected: true });
+        chrome.tabs.create({ url: "config.html", selected: true });
 
     if (request.type === "start") {
         await start();

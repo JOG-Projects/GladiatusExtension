@@ -22,8 +22,6 @@ const entries = injectedScripts.reduce(function (obj, el) {
    return obj
 }, userEntries)
 
-console.log(entries)
-
 module.exports = {
    mode: "production",
    entry: entries,
