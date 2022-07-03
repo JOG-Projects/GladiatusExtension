@@ -16,7 +16,7 @@
   ],
   "background": {
     "scripts": [
-      "src/services/background.js"
+      "background.js"
     ],
     "persistent": true
   },
