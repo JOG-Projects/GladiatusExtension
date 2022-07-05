@@ -33,14 +33,6 @@ export async function timeout(ms: number): Promise<void> {
     await new Promise<void>(resolve => window.setTimeout(resolve, ms))
 }
 
-export function createAlarm(alarmName: string, unixTime: number, minutesCooldown: number): void {
-    let alarmInfo: chrome.alarms.AlarmCreateInfo = {
-        periodInMinutes: minutesCooldown,
-        when: unixTime
-    };
-    chrome.alarms.create(alarmName, alarmInfo);
-}
-
 export function tomorrowMidnight(): number {
     let date = new Date();
     date.setDate(date.getDate() + 1);
