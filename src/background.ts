@@ -28,7 +28,9 @@ async function start(): Promise<void> {
 
     //await equiparPreset()
 
-    await initAttackPlayers()
+    while (true) {
+        await initAttackPlayers()
+    }
 }
 
 async function setTabId(): Promise<void> {
