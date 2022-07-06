@@ -11,7 +11,41 @@ let comidasCompraveis = slotsVendedor.filter(x => x.dataset.tooltip && !x.datase
 
 //array slots vazios
 let slots = Array.from(inventarioPlayer.children);
-let slotsVazios = slots.filter(x => x.className=="ui-droppable grid-droparea");
+let slotsVazios = slots.filter(x => x.className == "ui-droppable grid-droparea");
+
+
+
+let cuzinho = getByXpath('//*[@id="shop"]/div[15]')
+
+
+let cuzeta = getByXpath('//*[@id="shop"]/div[9]')
+
+trigger_drop(cuzinho, cuzeta);
+console.log("cuzado")
+
+function trigger_drop(item, localizacao) {
+    let draggable = item.draggable();
+    let droppable = localizacao.droppable();
+
+    let droppableOffset = droppable.offset();
+    let draggableOffset = draggable.offset();
+    let dx = droppableOffset.left - draggableOffset.left;
+    let dy = droppableOffset.top - draggableOffset.top;
+
+    draggable.simulate("drag", { dx: dx, dy: dy });
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 inventarioVendedor.addEventListener('dragstart', dragStart);
 

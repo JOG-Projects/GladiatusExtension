@@ -1,5 +1,6 @@
 import { execute, setStorage, getFromStorage, timeout } from "../utils";
 import { Cooldown } from "../model/cooldown";
+import { comprarComida } from "./comprarComida";
 
 export async function initAttackPlayers(): Promise<void> {
     let players = await getAllPlayers();
@@ -51,4 +52,6 @@ async function waitAtkCooldown(): Promise<void> {
 async function checarHP(): Promise<void> {
     await execute('getHP');
     let percentHP = await getFromStorage<number>("percentHP");
+
+    await comprarComida();
 }

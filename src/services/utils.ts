@@ -12,9 +12,12 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 
 export async function execute(file: string): Promise<void> {
     var tabId = await getFromStorage<number>("tabId");
-    let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
-    chrome.tabs.executeScript(tabId, details);
-    await promisifyExecute(file);
+    let detailsJQuery: chrome.tabs.InjectDetails = { file: 'jquery.js' };
+    chrome.tabs.executeScript(tabId, detailsJQuery, async () => {
+        let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
+        chrome.tabs.executeScript(tabId, details);
+        await promisifyExecute(file);
+    })
 }
 
 export async function getFromStorage<T>(key: string): Promise<T> {
