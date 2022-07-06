@@ -3,7 +3,7 @@
   "version": "2",
   "description": "Extension for automating Gladiatus tasks",
   "browser_action": {
-    "default_icon": "resource/img/icon_items_inactive.jpg",
+    "default_icon": "resource/img/popup_icon.png",
     "default_popup": "popup.html",
     "default_title": "Click Me"
   },
@@ -12,7 +12,6 @@
     "storage",
     "tabCapture",
     "background",
-    "alarms",
     "background",
     "*://*.gladiatus.gameforge.com/game/*"
   ],

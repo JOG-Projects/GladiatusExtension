@@ -1,12 +1,8 @@
-import { initAlarms, handleAlarm } from "./services/alarms";
 import { execute, setStorage } from "./services/utils";
 import { TipoLog } from "./services/model/tipoLog";
+import { initAttackPlayers } from "./services/controllers/atkPlayers";
 
 chrome.runtime.onMessage.addListener(handleMessage);
-
-chrome.alarms.onAlarm.addListener(handleAlarm);
-
-// chrome.runtime.onStartup.addListener(initAlarm) Para registrar os alarmes ao iniciar o navegador.
 
 async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void): Promise<void> {
     console.log(`Message: ${request.type}`);
@@ -32,7 +28,9 @@ async function start(): Promise<void> {
 
     //await equiparPreset()
 
-    await initAlarms();
+    while (true) {
+        await initAttackPlayers()
+    }
 }
 
 async function setTabId(): Promise<void> {

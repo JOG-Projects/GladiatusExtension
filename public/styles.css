@@ -9,8 +9,11 @@ body {
   transform: translate(-50%, -50%);
   width: 800px;
 }
-.switch {
-  margin-left: 120px;
+.switch-header {
+  margin-left: 80px;
+  width: 600px;
+}
+.switch-footer {
   width: 600px;
 }
 .set-number {
