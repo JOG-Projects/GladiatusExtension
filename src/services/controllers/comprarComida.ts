@@ -7,9 +7,9 @@ export async function comprarComida(): Promise<void>{
     let qtdComida = await getFromStorage<number>('qtdComidaInv');
     let qtdComidaMin = await getFromStorage<number>('qtdComidaMin');
 
+    await execute('comprarComida');
+
     if (qtdComida > qtdComidaMin){
         return;
     }
-
-    await execute('comprarComida');
 }
