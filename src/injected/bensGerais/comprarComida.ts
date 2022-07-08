@@ -2,18 +2,53 @@
 
 import { getByXpath } from "../../services/utils";
 
+
+
+//verificar comidas compráveis
+
+//array slots vazios
+
 let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
 let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
 
-//verificar comidas compráveis
 let slotsVendedor = Array.from(inventarioVendedor.children);
 let comidasCompraveis = slotsVendedor.filter(x => x.dataset.tooltip && !x.dataset.tooltip.contains('icon_rubies'));
 
-//array slots vazios
 let slots = Array.from(inventarioPlayer.children);
-let slotsVazios = slots.filter(x => x.className=="ui-droppable grid-droparea");
+
+let matrix = getInventoryMatrix(slots);
 
 inventarioVendedor.addEventListener('dragstart', dragStart);
+
+function buyFood(matrix: boolean[][], comidasCompraveis: Element[]) {
+    for (let y = 0; y < 5; y++) {
+        for (let x = 0; x < 8; x++) {
+            if(!matrix[y][x]){
+
+                //arrastar a primeira comida compravel para a matrix[y][x]
+
+                matrix[y][x] = true;
+            }
+        }        
+    }
+}
+
+function getInventoryMatrix(slots: Element[]) {
+    let rows = []
+    for (let y = 1; y < 6; y++) {
+        let row = [];
+        for (let x = 1; x < 9; x++) {
+            let hasItem = slots.some(el => verifyPositions(x, y, el));
+            row.push(hasItem);
+        }
+        rows.push(row);
+    }
+    return rows;
+}
+
+function verifyPositions(x: number, y: number, el: Element) {
+    return el.dataset.positionX == x && el.dataset.positionY == y;
+}
 
 function dragStart(e: DragEvent) {
     e.dataTransfer.setData('text/plain', e.target.id);
