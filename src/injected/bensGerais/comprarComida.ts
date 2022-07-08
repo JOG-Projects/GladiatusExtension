@@ -1,24 +1,39 @@
 // @ts-nocheck
-
 import { getByXpath } from "../../services/utils";
 
-
-
-//verificar comidas compráveis
-
-//array slots vazios
-
 let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
+
 let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
 
 let slotsVendedor = Array.from(inventarioVendedor.children);
+
 let comidasCompraveis = slotsVendedor.filter(x => x.dataset.tooltip && !x.dataset.tooltip.contains('icon_rubies'));
 
 let slots = Array.from(inventarioPlayer.children);
 
 let matrix = getInventoryMatrix(slots);
 
+let slotsVazios = slots.filter(x => x.className == "ui-droppable grid-droparea");
+
+let cuzinho = getByXpath('//*[@id="shop"]/div[15]')
+
+let cuzeta = getByXpath('//*[@id="shop"]/div[9]')
+
 inventarioVendedor.addEventListener('dragstart', dragStart);
+
+trigger_drop(cuzinho, cuzeta);
+
+function trigger_drop(item, localizacao) {
+    let draggable = item.draggable();
+    let droppable = localizacao.droppable();
+
+    let droppableOffset = droppable.offset();
+    let draggableOffset = draggable.offset();
+    let dx = droppableOffset.left - draggableOffset.left;
+    let dy = droppableOffset.top - draggableOffset.top;
+
+    draggable.simulate("drag", { dx: dx, dy: dy });
+}
 
 function buyFood(matrix: boolean[][], comidasCompraveis: Element[]) {
     for (let y = 0; y < 5; y++) {
