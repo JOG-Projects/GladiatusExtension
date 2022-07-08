@@ -25,6 +25,7 @@ async function attackPlayers(players: string[]): Promise<void> {
     for (let player of players) {
         await attackPlayer(player);
 
+        console.log("vou checar o hp")
         await checarHP();
 
         await waitAtkCooldown();
@@ -54,7 +55,11 @@ async function checarHP(): Promise<void> {
     let percentHP = await getFromStorage<number>("percentHP");
     let percentHPMin = await getFromStorage<number>("minLife");
 
+    console.log(percentHP)
+    console.log(percentHPMin)
+    console.log("chequei o hp")
     if(percentHP <= percentHPMin ){
+        console.log('vou comprar comida')
         await comprarComida();
     }
 }

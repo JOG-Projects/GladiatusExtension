@@ -1,5 +1,14 @@
-import { clickAndWait, doWork, tryUntil } from "../../services/utils";
+import { resolvePromise, setStorage } from "../../services/utils";
 
-doWork("abrirTabComidas", async () => {
-    await tryUntil(async () => clickAndWait('//*[@id="shop_nav"]/a[1]/div'));
-});
+
+(async () => {
+    try {
+        var penis = document.getElementById('shop_nav')!.children[1] as HTMLButtonElement;
+        penis.click();
+        await setStorage('abriuComidas', true);
+    }
+    finally {
+        await resolvePromise('abrirTabComidas');
+    };
+
+})();

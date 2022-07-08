@@ -3,8 +3,8 @@ import { TipoLog } from "./model/tipoLog";
 export async function tryUntil(action: () => Promise<void>): Promise<void> {
     try {
         await action();
-    } catch
-    {
+    } catch (e: any) {
+        await log(TipoLog.erro, e.message)
         await timeout(200);
         await tryUntil(action);
     }
@@ -13,11 +13,11 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 export async function execute(file: string): Promise<void> {
     var tabId = await getFromStorage<number>("tabId");
     let detailsJQuery: chrome.tabs.InjectDetails = { file: 'jquery.js' };
-    chrome.tabs.executeScript(tabId, detailsJQuery, async () => {
-        let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
-        chrome.tabs.executeScript(tabId, details);
-        await promisifyExecute(file);
-    })
+    // chrome.tabs.executeScript(tabId, detailsJQuery, async () => {
+    let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
+    chrome.tabs.executeScript(tabId, details);
+    await promisifyExecute(file);
+    // })
 }
 
 export async function getFromStorage<T>(key: string): Promise<T> {
@@ -33,7 +33,7 @@ export async function setStorage(key: string, value: any): Promise<void> {
 }
 
 export async function timeout(ms: number): Promise<void> {
-    await new Promise<void>(resolve => window.setTimeout(resolve, ms))
+    await new Promise<void>(resolve => setTimeout(resolve, ms))
 }
 
 export function tomorrowMidnight(): number {
@@ -78,8 +78,10 @@ export async function doWork(file: string, work: () => Promise<void>) {
 export async function registerListeners(elements: { id: string, default: any }[]) {
     for (let element of elements) {
         let html = document.getElementById(element.id) as HTMLInputElement;
+        console.log(html.value)
         let newValue = (await getFromStorage<any>(element.id)) ?? element.default;
         html.onchange = async () => await setStorage(element.id, html.value)
+        await setStorage(element.id, newValue)
         html.value = newValue;
     }
 }
@@ -97,6 +99,6 @@ async function promisifyExecute(file: string) {
     );
 }
 
-async function resolvePromise(file: string) {
+export async function resolvePromise(file: string) {
     await chrome.runtime.sendMessage({ type: file });
 }
