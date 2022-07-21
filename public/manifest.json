@@ -12,7 +12,6 @@
     "storage",
     "tabCapture",
     "background",
-    "background",
     "*://*.gladiatus.gameforge.com/game/*"
   ],
   "background": {
