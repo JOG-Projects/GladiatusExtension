@@ -1,6 +1,7 @@
 import { execute, setStorage } from "./services/utils";
 import { TipoLog } from "./services/model/tipoLog";
 import { initAttackPlayers } from "./services/controllers/atkPlayers";
+import { IMessage } from "./services/model/IMessage";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 

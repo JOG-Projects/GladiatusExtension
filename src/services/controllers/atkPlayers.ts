@@ -52,6 +52,7 @@ async function waitAtkCooldown(): Promise<void> {
 async function checarHP(): Promise<void> {
     await execute('getHP');
     let percentHP = await getFromStorage<number>("percentHP");
+
     let percentHPMin = await getFromStorage<number>("minLife");
 
     if(percentHP <= percentHPMin ){
