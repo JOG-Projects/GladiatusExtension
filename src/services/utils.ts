@@ -12,12 +12,9 @@ export async function tryUntil(action: () => Promise<void>): Promise<void> {
 
 export async function execute(file: string): Promise<void> {
     var tabId = await getFromStorage<number>("tabId");
-    let detailsJQuery: chrome.tabs.InjectDetails = { file: 'jquery.js' };
-    chrome.tabs.executeScript(tabId, detailsJQuery, async () => {
-        let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
-        chrome.tabs.executeScript(tabId, details);
-        await promisifyExecute(file);
-    })
+    let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
+    chrome.tabs.executeScript(tabId, details);
+    await promisifyExecute(file);
 }
 
 export async function getFromStorage<T>(key: string): Promise<T> {
@@ -75,19 +72,19 @@ export async function doWork(file: string, work: () => Promise<void>) {
     }
 }
 
-export async function registerListeners(elements: { id: string, default: any }[]) {
+export async function registerListeners(elements: { id: string, default: any, value: string }[]) {
     for (let element of elements) {
-        let html = document.getElementById(element.id) as HTMLInputElement;
+        let html = document.getElementById(element.id) as any;
         let newValue = (await getFromStorage<any>(element.id)) ?? element.default;
-        html.onchange = async () => await setStorage(element.id, html.value)
-        html.value = newValue;
+        html.onchange = async () => await setStorage(element.id, html[element.value])
+        html[element.value] = newValue;
     }
 }
 
-async function promisifyExecute(file: string) {
+async function promisifyExecute(messageCallback: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {
-            if (message.type === file) {
+            if (message.type === messageCallback) {
                 chrome.runtime.onMessage.removeListener(listener);
                 resolve();
             }

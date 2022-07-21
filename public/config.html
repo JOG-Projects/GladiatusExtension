@@ -2,7 +2,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
@@ -16,21 +15,11 @@
         <div class="p-3 p bg-dark text-light center">
             <div class="switch-header">
                 <div class="col d-flex pb-2">
-                    <div class="col form-check form-switch">
-                        <input class="form-check-input" type="checkbox" checked id="comer"> Rec. Life
-                    </div>
-                    <div class="col form-check form-switch">
-                        <input class="form-check-input" type="checkbox" checked id="arena"> Arena
-                    </div>
-                    <div class="col form-check form-switch">
-                        <input class="form-check-input" type="checkbox" checked id="espedicao"> Expedição
-                    </div>
-                    <div class="col form-check form-switch">
-                        <input class="form-check-input" type="checkbox" checked id="circus"> Circus
-                    </div>
-                    <div class="col form-check form-switch">
-                        <input class="form-check-input" type="checkbox" checked id="masmorra"> Masmorra
-                    </div>
+                    <div class="col form-check form-switch"></div>
+                    <div class="col form-check form-switch"></div>
+                    <div class="col form-check form-switch"></div>
+                    <div class="col form-check form-switch"></div>
+                    <div class="col form-check form-switch"></div>
                 </div>
             </div>
 
@@ -48,8 +37,8 @@
                     </div>
                     <div class="col text-center">
                         <p style="font-size: 0.7em;">Delay ms</p>
-                        <input type="number" class="bg-dark text-light text-center" onKeyDown="return false"
-                            id="delay" min="300" max="30000" style="width: 80px;">
+                        <input type="number" class="bg-dark text-light text-center" onKeyDown="return false" id="delay"
+                            min="300" max="30000" style="width: 80px;">
 
                     </div>
                     <div class="col text-center">
@@ -110,7 +99,7 @@
             </div>
         </div>
     </div>
-    <script src="cadastrarListeners.js"></script>
+    <script src="config_setup.js"></script>
 </body>
 
 </html>
