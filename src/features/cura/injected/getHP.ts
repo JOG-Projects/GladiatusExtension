@@ -1,5 +1,5 @@
-import { getByXpath, setStorage, log, doWork, tryUntil } from "../../services/utils";
-import { TipoLog } from "../../services/model/tipoLog";
+import { TipoLog } from "../../../model/infra/tipoLog";
+import { doWork, tryUntil, getByXpath, setStorage, log } from "../../utils";
 
 doWork("getHP", async () => {
     await tryUntil(async () => await getHP());

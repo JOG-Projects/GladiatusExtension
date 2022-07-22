@@ -1,5 +1,5 @@
-import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../../../infra/utils";
-import { TipoLog } from "../../../../infra/model/tipoLog";
+import { TipoLog } from "../../../model/infra/tipoLog";
+import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../utils";
 
 doWork("atacarPlayer", async () => {
     await tryUntil(setPlayerName);

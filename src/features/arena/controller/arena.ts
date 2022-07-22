@@ -1,7 +1,6 @@
 import { getCurrentTarget, waitAtkCooldown } from "../../ataque_utils";
-import { Cooldown } from "../../../model/cooldown";
 import { checarHP } from "../../cura/controller/comprarComida";
-import { execute, setStorage, timeout } from "../../utils";
+import { execute, getFromStorage, setStorage, timeout, updateStorage } from "../../utils";
 
 export async function attackArena(): Promise<void> {
     let player = await getCurrentTarget("currentArenaTarget");
@@ -19,6 +18,8 @@ async function attackPlayer(player: string): Promise<void> {
     console.log(`Atacando jogador: ${player}`);
     await execute('atacarPlayer');
     await timeout(1000)
+
+    await updateStorage<number>("currentArenaTarget", (currentIndex) => ++currentIndex);
 
     await checarHP();
 }

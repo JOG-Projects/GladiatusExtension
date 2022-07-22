@@ -8,10 +8,8 @@ const getAllSubDir = searchPath => readdirSync(searchPath, { withFileTypes: true
 const injectedPath = path.resolve(__dirname, "..", "src", "features");
 
 const injectedDirectories = getAllSubDir(injectedPath).map(p => path.resolve(p, "injected"));
-console.log(injectedDirectories)
 
 const injectedScripts = injectedDirectories.map(p => getAllItems(p)).flat()
-console.log(injectedScripts)
 
 const userEntries =
 {

@@ -1,6 +1,5 @@
-import { doWork, log, setStorage, tryUntil } from "../../services/utils";
-import { TipoLog } from "../../services/model/tipoLog";
-
+import { TipoLog } from "../../../model/infra/tipoLog";
+import { doWork, tryUntil, log, setStorage } from "../../utils";
 
 doWork("obterQtdComidaInv", async () => {
     await tryUntil(async () => getQntComida());

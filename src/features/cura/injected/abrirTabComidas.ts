@@ -1,14 +1,7 @@
-import { resolvePromise, setStorage } from "../../services/utils";
+import { doWork } from "../../utils";
 
-
-(async () => {
-    try {
-        var penis = document.getElementById('shop_nav')!.children[1] as HTMLButtonElement;
-        penis.click();
-        await setStorage('abriuComidas', true);
-    }
-    finally {
-        await resolvePromise('abrirTabComidas');
-    };
-
-})();
+doWork('abrirTabComidas', async () => {
+    var loja = document.getElementById('shop_nav') as HTMLElement
+    var tabComidas = loja.children[1] as HTMLButtonElement;
+    tabComidas.click();
+})
