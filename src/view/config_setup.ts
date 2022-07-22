@@ -9,4 +9,5 @@ registerListeners(
         { id: 'expedicao', default: false, value: "checked" },
         { id: 'circus', default: false, value: "checked" },
         { id: 'masmorra', default: false, value: "checked" },
+        { id: 'curar', default: false, value: "checked" },
     ]);
