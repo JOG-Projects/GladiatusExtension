@@ -2,13 +2,16 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const { readdirSync } = require('fs');
 
-const getAllItems = (searchPath) => readdirSync(searchPath).map(p => path.resolve(searchPath, p));
+const getAllItems = searchPath => readdirSync(searchPath).map(p => path.resolve(searchPath, p));
+const getAllSubDir = searchPath => readdirSync(searchPath, { withFileTypes: true }).filter(s => s.isDirectory()).map(p => path.resolve(searchPath, p.name));
 
-const injectedPath = path.resolve(__dirname, "..", "src", "injected");
+const injectedPath = path.resolve(__dirname, "..", "src", "features");
 
-const injectedDirectories = getAllItems(injectedPath);
+const injectedDirectories = getAllSubDir(injectedPath).map(p => path.resolve(p, "injected"));
+console.log(injectedDirectories)
 
 const injectedScripts = injectedDirectories.map(p => getAllItems(p)).flat()
+console.log(injectedScripts)
 
 const userEntries =
 {
