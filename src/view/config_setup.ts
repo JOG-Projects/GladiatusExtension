@@ -1,4 +1,4 @@
-import { registerListeners } from "../services/utils";
+import { registerListeners } from "../features/utils";
 
 registerListeners(
     [

@@ -1,6 +1,5 @@
-import { doWork, log, setStorage, tryUntil } from "../../services/utils";
-import { TipoLog } from "../../services/model/tipoLog";
-
+import { TipoLog } from "../../../model/infra/tipoLog";
+import { doWork, log, setStorage, tryUntil } from "../../utils";
 
 doWork("verificarMissoes", async () => {
     await tryUntil(async () => obterNumeroMissoes());

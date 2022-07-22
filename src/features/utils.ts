@@ -1,6 +1,6 @@
-import { IMessage } from "./model/IMessage";
-import { Indexable } from "./model/Indexable";
-import { TipoLog } from "./model/tipoLog";
+import { IMessage } from "../model/infra/IMessage";
+import { Indexable } from "../model/infra/Indexable";
+import { TipoLog } from "../model/infra/tipoLog";
 
 export async function tryUntil(action: () => Promise<void>): Promise<void> {
     try {

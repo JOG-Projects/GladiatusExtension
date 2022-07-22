@@ -1,8 +1,7 @@
-import { execute, setStorage } from "./services/utils";
-import { TipoLog } from "./services/model/tipoLog";
-import { initAttackPlayers } from "./services/controllers/arena";
-import { IMessage } from "./services/model/IMessage";
-import { main } from "./services/controllers/main";
+import { execute, setStorage } from "./features/utils";
+import { IMessage } from "./model/infra/IMessage";
+import { main } from "./features/main";
+import { TipoLog } from "./model/infra/tipoLog";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 

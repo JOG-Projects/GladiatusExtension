@@ -1,4 +1,4 @@
-import { execute, getFromStorage, setStorage, timeout } from "../utils";
+import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function checarHP(): Promise<void> {
     await execute('getHP');
