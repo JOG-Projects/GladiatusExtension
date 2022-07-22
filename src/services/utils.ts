@@ -74,6 +74,10 @@ export async function doWork(file: string, work: () => Promise<void>) {
     }
 }
 
+export async function resolvePromise(file: string) {
+    await chrome.runtime.sendMessage({ type: file });
+}
+
 export async function registerListeners(elements: { id: string, default: any, value: string }[]) {
     for (let element of elements) {
         let html = document.getElementById(element.id) as Indexable;
@@ -95,8 +99,4 @@ async function promisifyExecute(messageCallback: string) {
         chrome.runtime.onMessage.addListener(listener);
     }
     );
-}
-
-export async function resolvePromise(file: string) {
-    await chrome.runtime.sendMessage({ type: file });
 }
