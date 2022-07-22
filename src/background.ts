@@ -1,7 +1,8 @@
 import { execute, setStorage } from "./services/utils";
 import { TipoLog } from "./services/model/tipoLog";
-import { initAttackPlayers } from "./services/controllers/atkPlayers";
+import { initAttackPlayers } from "./services/controllers/arena";
 import { IMessage } from "./services/model/IMessage";
+import { main } from "./services/controllers/main";
 
 chrome.runtime.onMessage.addListener(handleMessage);
 
@@ -25,16 +26,16 @@ async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSe
 }
 
 async function start(): Promise<void> {
-    await setTabId()
+    await getTabId()
 
     //await equiparPreset()
 
     while (true) {
-        await initAttackPlayers()
+        await main()
     }
 }
 
-async function setTabId(): Promise<void> {
+async function getTabId(): Promise<void> {
     let query: chrome.tabs.QueryInfo = { url: "https://*.gladiatus.gameforge.com/*" };
     let tabs = await new Promise<chrome.tabs.Tab[]>(resolve => chrome.tabs.query(query, resolve));
 
