@@ -11,6 +11,7 @@ export async function attackArena(): Promise<void> {
     await execute('abrirArena');
     await timeout(1000);
 
+    await setStorage("currentArenaTarget", GetNext(target.players, target.current));
     console.log(`Atacando (Arena) jogador: ${target.current}`);
     await execute('atacarArena');
     await timeout(1000)

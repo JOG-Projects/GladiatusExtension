@@ -1,4 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
+import { getCurrentTarget } from "../../ataque_utils";
 import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../utils";
 
 doWork("atacarCircus", async () => {
@@ -8,7 +9,8 @@ doWork("atacarCircus", async () => {
 });
 
 async function setPlayerName(): Promise<void> {
-    let player = await getFromStorage<string>("currentCircusTarget");
+    let target = await getCurrentTarget("currentCircusTarget")
+    let player = target.current;
     await log(TipoLog.info, `Inserindo nome para ser atacado: ${player}`);
     let inputNome = getByXpath<HTMLInputElement>('//*[@id="ujn"]');
     inputNome.value = player;

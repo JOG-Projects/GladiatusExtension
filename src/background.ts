@@ -6,7 +6,7 @@ import { TipoLog } from "./model/infra/tipoLog";
 chrome.runtime.onMessage.addListener(handleMessage);
 
 async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void): Promise<void> {
-    console.log(`Message: ${request.type}`);
+    console.log(`Event: ${request.type}`);
 
     if (request.type === "config")
         chrome.tabs.create({ url: "config.html", selected: true });
