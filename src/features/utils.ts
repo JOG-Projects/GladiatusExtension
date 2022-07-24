@@ -65,7 +65,7 @@ export async function logError(e: any): Promise<void> {
 
 export async function doWork(file: string, work: () => Promise<void>) {
     try {
-        await work();
+        await tryUntil(work);
     } catch (e) {
         await logError(e);
     }

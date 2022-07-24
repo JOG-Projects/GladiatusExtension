@@ -1,5 +1,3 @@
 import { clickAndWait, doWork, tryUntil } from "../../utils";
 
-doWork("selecionarInventario", async () => {
-    await tryUntil(async () => clickAndWait('//*[@id="inventory_nav"]/a[1]'));
-});
+doWork("selecionarInventario", async () => clickAndWait('//*[@id="inventory_nav"]/a[1]'));
