@@ -15,7 +15,7 @@ export async function attackCircus(): Promise<void> {
     await execute('atacarCircus');
     await timeout(1000)
 
-    await setStorage("currentArenaTarget", GetNext(target.players, target.current));
+    await setStorage("currentCircusTarget", GetNext(target.players, target.current));
 
     await checarHP();
 }
