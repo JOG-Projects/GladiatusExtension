@@ -88,12 +88,6 @@ export async function registerListeners(elements: { id: string, default: any, va
     }
 }
 
-export async function updateStorage<T>(key: string, func: (value: T) => T) {
-    var current = await getFromStorage<T>(key);
-    var newValue = func(current);
-    await setStorage(key, newValue)
-}
-
 async function promisifyExecute(messageCallback: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {

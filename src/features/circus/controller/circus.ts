@@ -2,17 +2,17 @@ import { getCurrentTarget, GetNext, waitAtkCooldown } from "../../ataque_utils";
 import { checarHP } from "../../cura/controller/comprarComida";
 import { execute, setStorage, timeout } from "../../utils";
 
-export async function attackArena(): Promise<void> {
-    let target = await getCurrentTarget("currentArenaTarget");
+export async function attackCircus(): Promise<void> {
+    let target = await getCurrentTarget("currentCircusTarget");
 
-    await waitAtkCooldown("getArenaCooldown", "arenaCooldown");
+    await waitAtkCooldown("getCircusCooldown", "circusCooldown");
 
-    console.log("Abrindo arena");
-    await execute('abrirArena');
+    console.log("Abrindo circus");
+    await execute('abrirCircus');
     await timeout(1000);
 
-    console.log(`Atacando (Arena) jogador: ${target.current}`);
-    await execute('atacarArena');
+    console.log(`Atacando (Circus) jogador: ${target.current}`);
+    await execute('atacarCircus');
     await timeout(1000)
 
     await setStorage("currentArenaTarget", GetNext(target.players, target.current));

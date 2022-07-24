@@ -2,15 +2,15 @@ import { execute, getByXpath, getFromStorage, log, setStorage, timeout } from ".
 import { Cooldown } from "../model/cooldown";
 import { TipoLog } from "../model/infra/tipoLog";
 
-export async function getCurrentTarget(mode: string): Promise<string> {
+export async function getCurrentTarget(mode: string): Promise<{ current: string, players: string[] }> {
     let playersText = await getFromStorage<string>("atkListPlayers");
 
     if (!playersText || playersText.length == 0) {
         throw "Sem players configurados para atacar";
     }
-    let current = await getFromStorage<number>(mode) ?? 0;
     let players = playersText.split("\n");
-    return players[current];
+    let current = await getFromStorage<string>(mode) ?? players[0];
+    return { current: current, players: players };
 }
 
 
@@ -34,4 +34,8 @@ export async function waitAtkCooldown(scriptFile: string, key: string): Promise<
 
     console.log(`Esperando cooldown ${key}: ${cooldown.minutos}:${cooldown.segundos}`);
     await timeout((cooldown.minutos * 60 + cooldown.segundos) * 1000);
+}
+
+export function GetNext(players: string[], current: string): string {
+    return players[1 + players.indexOf(current)] ?? players[0]
 }
