@@ -22,6 +22,9 @@ export async function checarHP(): Promise<void> {
 async function curar(): Promise<void> {
     console.log("vou abrir os bens gerais")
     await execute('abrirBensGerais');
+
+    await timeout(1000);
+
     console.log("vou abrir a tab comidas")
     await execute('abrirTabComidas');
 
@@ -45,8 +48,7 @@ async function curar(): Promise<void> {
 async function obterQtdComida() {
     console.log("vou obter qtd comida");
     await execute('obterQtdComidaInv');
-    let qtdComida = await getFromStorage<number>('qtdComidaInv');
-    return qtdComida;
+    return await getFromStorage<number>('qtdComidaInv');
 }
 
 async function usarCura(): Promise<void> {

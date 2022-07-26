@@ -1,32 +1,30 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, getByXpath, log } from "../../utils";
+import { doWork, getByXpath, log, tryUntil } from "../../utils";
+
+const QTD_COLUNAS = 8;
+const QTD_LINHAS = 5;
+const QTD_SLOTS_INV = QTD_COLUNAS * QTD_LINHAS;
 
 doWork('comprarComida', async () => {
     let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
 
     let slotsVendedor = Array.from(inventarioVendedor.children);
-    
-    await log(TipoLog.info, slotsVendedor.toString());
 
-    let comidasCompraveis = slotsVendedor.filter(x => {
-        let comida = x as any;
-        return comida.dataset.tooltip && !comida.dataset.tooltip.contains('icon_rubies')
-    });
-
-    await log(TipoLog.info, comidasCompraveis.toString());
+    await tryUntil(async () => {
+        // let comidasCompraveis = slotsVendedor.filter(x => {
+        //     let comida = x as any;
+        //     return comida.dataset.tooltip && !comida.dataset.tooltip.contains('icon_rubies')
+        // });
+    })
 
     let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
 
-    let slots = Array.from(inventarioPlayer.children);
+    let items = Array.from(inventarioPlayer.children).filter(i => Object.keys((i as any).dataset).length > 0);
 
-    let matrix = getInventoryMatrix(slots);
+    let qtdSlotsVazios = QTD_SLOTS_INV - items.length;
 
-    await log(TipoLog.info, matrix.toString());
-
-    let slotsVazios = slots.filter(x => x.className == "ui-droppable grid-droparea");
-
-    await log(TipoLog.info, slotsVazios.toString());
-
+    await log(TipoLog.info, `QtdItens = ${qtdSlotsVazios}`);
+    await log(TipoLog.info, `Slots Vazios = ${qtdSlotsVazios}`);
     //trigger_drop(banana, cuzeta);
 })
 
@@ -59,20 +57,7 @@ function buyFood(matrix: boolean[][], comidasCompraveis: Element[]) {
     }
 }
 
-function getInventoryMatrix(slots: Element[]) {
-    let rows = []
-    for (let x = 1; x < 6; x++) {
-        let row = [];
-        for (let y = 1; y < 9; y++) {
-            let hasItem = slots.some(el => verifyPositions(x, y, el));
-            row.push(hasItem);
-        }
-        rows.push(row);
-    }
-    return rows;
-}
-
-function verifyPositions(x: number, y: number, el: Element) {
+function verifySlot(x: number, y: number, el: Element) {
     let element = el as any;
     return element.dataset.positionX == x && element.dataset.positionY == y;
 }
