@@ -1,26 +1,31 @@
-import { doWork, getByXpath } from "../../utils";
+import { TipoLog } from "../../../model/infra/tipoLog";
+import { doWork, getByXpath, log } from "../../utils";
 
 doWork('comprarComida', async () => {
     let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
 
-    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
-
     let slotsVendedor = Array.from(inventarioVendedor.children);
+    
+    await log(TipoLog.info, slotsVendedor.toString());
 
     let comidasCompraveis = slotsVendedor.filter(x => {
         let comida = x as any;
-        return comida.dataset.tooltip && comida.tooltip.contains('icon_rubies')
+        return comida.dataset.tooltip && !comida.dataset.tooltip.contains('icon_rubies')
     });
+
+    await log(TipoLog.info, comidasCompraveis.toString());
+
+    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
 
     let slots = Array.from(inventarioPlayer.children);
 
     let matrix = getInventoryMatrix(slots);
 
+    await log(TipoLog.info, matrix.toString());
+
     let slotsVazios = slots.filter(x => x.className == "ui-droppable grid-droparea");
 
-    let banana = getByXpath('//*[@id="shop"]/div[6]')
-
-    let cuzeta = getByXpath('//*[@id="shop"]/div[6]')
+    await log(TipoLog.info, slotsVazios.toString());
 
     //trigger_drop(banana, cuzeta);
 })

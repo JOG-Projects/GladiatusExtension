@@ -1,7 +1,6 @@
-import { doWork } from "../../utils";
+import { doWork, getByXpath } from "../../utils";
 
 doWork('abrirTabComidas', async () => {
-    var loja = document.getElementById('shop_nav') as HTMLElement
-    var tabComidas = loja.children[1] as HTMLButtonElement;
+    var tabComidas = getByXpath<HTMLElement>('//*[@id="shop_nav"]/a[1]/div');
     tabComidas.click();
 })

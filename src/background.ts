@@ -27,11 +27,7 @@ async function handleMessage(request: IMessage, sender: chrome.runtime.MessageSe
 async function start(): Promise<void> {
     await getTabId()
 
-    //await equiparPreset()
-
-    while (true) {
-        await main()
-    }
+    await main()
 }
 
 async function getTabId(): Promise<void> {
