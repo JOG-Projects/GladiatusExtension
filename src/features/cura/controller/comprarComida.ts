@@ -16,10 +16,26 @@ export async function checarHP(): Promise<void> {
     }
 
     console.log('Preciso me curar')
-    await curar();
+    await usarCura();
+
+    console.log('Preciso comprar cura')
+    await comprarComida();
 }
 
-async function curar(): Promise<void> {
+async function obterQtdComida() {
+    console.log("vou obter qtd comida");
+    await execute('obterQtdComidaInv');
+    return await getFromStorage<number>('qtdComidaInv');
+}
+
+async function usarCura(): Promise<void> {
+    console.log('vou abrir o inventário');
+    await execute('abrirVistaGeral');
+
+    console.error('em magina eu arrastando comida');
+}
+
+async function comprarComida(){
     console.log("vou abrir os bens gerais")
     await execute('abrirBensGerais');
 
@@ -34,8 +50,6 @@ async function curar(): Promise<void> {
     console.log(`Comida atual: ${qtdComida}`)
     console.log(`Comida min: ${qtdComidaMin}`)
 
-    await usarCura();
-
     if (qtdComida > qtdComidaMin) {
         console.log("não preciso comprar comida")
         return;
@@ -43,14 +57,4 @@ async function curar(): Promise<void> {
 
     console.log("vou comprar comida")
     await execute('comprarComida');
-}
-
-async function obterQtdComida() {
-    console.log("vou obter qtd comida");
-    await execute('obterQtdComidaInv');
-    return await getFromStorage<number>('qtdComidaInv');
-}
-
-async function usarCura(): Promise<void> {
-    console.error('IMPLEMENTAR: ARRASTANDO COMIDA PRO BONECO')
 }
