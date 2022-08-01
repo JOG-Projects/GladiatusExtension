@@ -40,12 +40,12 @@ async function curarHPMinimo(): Promise<void> {
     console.log('vou abrir o inventário');
     await execute('abrirVistaGeral');
 
-    let hp;
-    let minHP = getMinHP();
-    while ((hp = getHP()) < minHP) {
+    let minHP = await getMinHP();
+
+    while ((await getHP() < minHP)) {
+        await timeout(1000);
         await execute('curar');
     }
-
 }
 
 async function comprarComida() {
