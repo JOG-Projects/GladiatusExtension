@@ -26,7 +26,6 @@ async function getMinHP(): Promise<number> {
 
 async function getHP(): Promise<number> {
     await execute('getHP');
-
     return await getFromStorage<number>("percentHP");
 }
 
@@ -41,10 +40,13 @@ async function curarHPMinimo(): Promise<void> {
     await execute('abrirVistaGeral');
 
     let minHP = await getMinHP();
+    let hp = await getHP();
 
-    while ((await getHP() < minHP)) {
+    while (hp < minHP) {
         await timeout(1000);
         await execute('curar');
+        hp = await getHP();
+        console.log(hp + " " + minHP)
     }
 }
 

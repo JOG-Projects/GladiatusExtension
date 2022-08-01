@@ -89,6 +89,15 @@ export async function registerListeners(elements: { id: string, default: any, va
     }
 }
 
+export function doubleClick(comida: Element) {
+    const dbClickEvent = new MouseEvent('dblclick', {
+        bubbles: true,
+        cancelable: false
+    });
+
+    comida.dispatchEvent(dbClickEvent);
+}
+
 async function promisifyExecute(messageCallback: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {
