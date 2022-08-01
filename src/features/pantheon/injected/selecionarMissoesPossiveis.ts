@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, log, tryUntil } from "../../utils";
+import { doWork, log, timeout, tryUntil } from "../../utils";
 
 doWork("selecionarMissoesPossiveis", async () => {
     await tryUntil(async () => selecionarMissoesPossiveis());
@@ -14,6 +14,7 @@ async function selecionarMissoesPossiveis(): Promise<void> {
         return;
     }
     await log(TipoLog.info, 'Achei uma missão.');
+    await timeout(1000);
     missaoDisponivel.click();
 }
 
