@@ -28,11 +28,13 @@ doWork('comprarComida', async () => {
     await log(TipoLog.info, `Qtd Slots Vazios = ${slotsVazios}`);
 
     let dinheiroAtual = getDinheiroAtual();
+    await log(TipoLog.info, `Dinheiro atual: ${dinheiroAtual}`);
 
     let comprados = 0;
     for (let i = 0; i < slotsVazios; i++) {
         let comidaPreco = comidasCompraveisPreco.shift();
-        if (dinheiroAtual > comidaPreco?.price) {
+        await log(TipoLog.info, `Preco: ${comidaPreco?.price}`)
+        if (dinheiroAtual > Number(comidaPreco?.price)) {
             doubleClick(comidaPreco?.item);
             comprados++;
         }
@@ -43,12 +45,10 @@ doWork('comprarComida', async () => {
 function getQtdItensInv(): number {
     let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="content"]/table/tbody/tr/td[2]/div[6]/div');
 
-    let items = Array.from(inventarioPlayer.children);
-
-    return items.length;
+    return inventarioPlayer.children.length;
 }
 
 function getDinheiroAtual(): number {
     let element = getByXpath('//*[@id="sstat_gold_val"]')
-    return Number(element.textContent);
+    return Number(element.textContent?.replace(".", ""));
 }

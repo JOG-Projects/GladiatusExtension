@@ -1,7 +1,7 @@
 import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function checarHP(): Promise<void> {
-    let curarAtivado = getFromStorage("curar");
+    let curarAtivado = getFromStorage<boolean>("curar");
     if (!curarAtivado) {
         console.log("Cura desabilitada!!!");
         return;
@@ -49,8 +49,8 @@ async function curarHPMinimo(): Promise<void> {
     let hp = await getHP();
 
     while (hp < minHP) {
-        await timeout(1000);
         await execute('curar');
+        await timeout(3000);
 
         let qtdComidas = await getFromStorage("qtdComidasInv")
         console.log(`qtd comidas ${qtdComidas}`)
@@ -85,6 +85,7 @@ export async function comprarComida() {
 
     console.log("vou comprar comida")
     await execute('comprarComida');
+    await timeout(3000);
 }
 
 

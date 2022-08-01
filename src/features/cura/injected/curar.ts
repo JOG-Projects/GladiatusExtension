@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doubleClick, doWork, log, setStorage, tryUntil } from "../../utils";
+import { doubleClick, doWork, getByXpath, log, setStorage, tryUntil } from "../../utils";
 
 doWork("curar", async () => {
     let comidas = await tryUntil(() => getInventoryFoods())
@@ -8,7 +8,7 @@ doWork("curar", async () => {
     let qtdComidas = comidas?.length ?? 0;
 
     await setStorage("qtdComidasInv", qtdComidas);
-    
+
     if (qtdComidas == 0) {
         return;
     }
@@ -18,8 +18,8 @@ doWork("curar", async () => {
     await log(TipoLog.info, "Me curei");
 });
 
-async function getInventoryFoods(): Promise<HTMLCollection> {
-    let inventario = document.getElementById('inv') as HTMLElement;
-    let comidas = inventario.children;
+async function getInventoryFoods(): Promise<Element[]> {
+    let inventario = getByXpath<HTMLElement>('//*[@id="content"]/table/tbody/tr/td[2]/div[6]/div');
+    let comidas = Array.from(inventario.children).filter((i: any) => i.dataset.tooltip);
     return comidas;
 }

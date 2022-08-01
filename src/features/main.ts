@@ -1,12 +1,12 @@
 import { attackArena } from "./arena/controller/arena";
 import { attackCircus } from "./circus/controller/circus";
-import { comprarComida } from "./cura/controller/cura";
+import { checarHP, comprarComida } from "./cura/controller/cura";
 import { pantheon } from "./pantheon/controller/pantheonController";
 import { gerarDrops, getFromStorage, setStorage, timeout } from "./utils";
 
 export async function main(): Promise<void> {
-    await production();
-    //await test();
+    //await production();
+    await test();
 }
 
 async function production(): Promise<void> {
@@ -25,13 +25,11 @@ async function production(): Promise<void> {
         await attackArena();
         await attackCircus();
         await pantheon();
-
-        await timeout(10 * 1000);
     }
 }
 
 async function test(): Promise<void> {
-    await comprarComida();
+    await checarHP();
 }
 
 function tentarChuparDrops() {
