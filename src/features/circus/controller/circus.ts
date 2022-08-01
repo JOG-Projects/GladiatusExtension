@@ -1,5 +1,5 @@
 import { getCurrentTarget, GetNext, waitAtkCooldown } from "../../ataque_utils";
-import { checarHP } from "../../cura/controller/comprarComida";
+import { checarHP } from "../../cura/controller/cura";
 import { execute, setStorage, timeout } from "../../utils";
 
 export async function attackCircus(): Promise<void> {

@@ -1,10 +1,10 @@
 import { attackArena } from "./arena/controller/arena";
 import { attackCircus } from "./circus/controller/circus";
-import { checarHP } from "./cura/controller/comprarComida";
+import { checarHP } from "./cura/controller/cura";
 import { pantheon } from "./pantheon/controller/pantheonController";
 
 export async function main(): Promise<void> {
-    // await production();
+    //await production();
     await test();
 }
 
