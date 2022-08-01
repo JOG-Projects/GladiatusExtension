@@ -26,7 +26,7 @@ async function production(): Promise<void> {
         await attackCircus();
         await pantheon();
 
-        await timeout(5 * 1000);
+        await timeout(10 * 1000);
     }
 }
 
