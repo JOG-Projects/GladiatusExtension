@@ -1,11 +1,9 @@
 import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function checarHP(): Promise<void> {
-    await execute('getHP');
+    let percentHP = await getHP();
 
-    let percentHP = await getFromStorage<number>("percentHP");
-
-    let percentHPMin = await getFromStorage<number>("minLife");
+    let percentHPMin = await getMinHP();
 
     console.log(`HP atual: ${percentHP}`)
     console.log(`HP min: ${percentHPMin}`)
@@ -16,10 +14,20 @@ export async function checarHP(): Promise<void> {
     }
 
     console.log('Preciso me curar')
-    await usarCura();
+    await curarHPMinimo();
 
     console.log('Preciso comprar cura')
     await comprarComida();
+}
+
+async function getMinHP(): Promise<number> {
+    return await getFromStorage<number>("minLife");
+}
+
+async function getHP(): Promise<number> {
+    await execute('getHP');
+
+    return await getFromStorage<number>("percentHP");
 }
 
 async function obterQtdComida() {
@@ -28,14 +36,19 @@ async function obterQtdComida() {
     return await getFromStorage<number>('qtdComidaInv');
 }
 
-async function usarCura(): Promise<void> {
+async function curarHPMinimo(): Promise<void> {
     console.log('vou abrir o inventário');
     await execute('abrirVistaGeral');
 
-    console.error('em magina eu arrastando comida');
+    let hp;
+    let minHP = getMinHP();
+    while ((hp = getHP()) < minHP) {
+        await execute('curar');
+    }
+
 }
 
-async function comprarComida(){
+async function comprarComida() {
     console.log("vou abrir os bens gerais")
     await execute('abrirBensGerais');
 
@@ -58,3 +71,6 @@ async function comprarComida(){
     console.log("vou comprar comida")
     await execute('comprarComida');
 }
+
+
+
