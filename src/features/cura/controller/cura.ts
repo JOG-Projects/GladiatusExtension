@@ -29,7 +29,7 @@ async function getHP(): Promise<number> {
     return await getFromStorage<number>("percentHP");
 }
 
-async function obterQtdComida() {
+async function obterQtdComidaInv() {
     console.log("vou obter qtd comida");
     await execute('obterQtdComidaInv');
     return await getFromStorage<number>('qtdComidaInv');
@@ -45,12 +45,19 @@ async function curarHPMinimo(): Promise<void> {
     while (hp < minHP) {
         await timeout(1000);
         await execute('curar');
+
+        let qtdComidas = await getFromStorage("qtdComidasInv")
+        console.log(`qtd comidas ${qtdComidas}`)
+        if (qtdComidas == 0) {
+            console.log("Acabou as comidas!!!");
+            return;
+        }
+
         hp = await getHP();
-        console.log(hp + " " + minHP)
     }
 }
 
-async function comprarComida() {
+export async function comprarComida() {
     console.log("vou abrir os bens gerais")
     await execute('abrirBensGerais');
 
@@ -59,11 +66,11 @@ async function comprarComida() {
     console.log("vou abrir a tab comidas")
     await execute('abrirTabComidas');
 
-    let qtdComida = await obterQtdComida();
+    let qtdComida = await obterQtdComidaInv();
     let qtdComidaMin = await getFromStorage<number>('qtdComidaMin');
 
-    console.log(`Comida atual: ${qtdComida}`)
-    console.log(`Comida min: ${qtdComidaMin}`)
+    console.log(`Qtd Comida atual: ${qtdComida}`)
+    console.log(`Qtd Comida min: ${qtdComidaMin}`)
 
     if (qtdComida > qtdComidaMin) {
         console.log("não preciso comprar comida")

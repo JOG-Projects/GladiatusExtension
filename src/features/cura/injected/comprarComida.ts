@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doubleClick, doWork, getByXpath, log, tryUntil } from "../../utils";
+import { doubleClick, doWork, getByXpath, log } from "../../utils";
 
 const QTD_COLUNAS = 8;
 const QTD_LINHAS = 5;
@@ -10,26 +10,45 @@ doWork('comprarComida', async () => {
 
     let slotsVendedor = Array.from(inventarioVendedor.children);
 
-    let comidasCompraveis = slotsVendedor.filter((item: any) => {
-        return item.dataset.tooltip && !item.dataset.tooltip.contains('icon_rubies')
+    let comidasCompraveis = slotsVendedor.filter((item: any) => item.dataset.tooltip && !item.dataset.tooltip.includes('icon_rubies'))
+
+    let comidasCompraveisPreco = comidasCompraveis.map((itemCompravel: any) => {
+        return {
+            price: itemCompravel.dataset.priceGold,
+            item: itemCompravel
+        }
     });
 
-    let qtdSlotsVazios = getQtdSlotsVazios();
+    await log(TipoLog.info, `Comidas compraveis: ${comidasCompraveis.length}`)
 
-    await log(TipoLog.info, `QtdItens = ${qtdSlotsVazios}`);
-    await log(TipoLog.info, `Slots Vazios = ${qtdSlotsVazios}`);
+    let qtdItens = getQtdItensInv();
+    let slotsVazios = QTD_SLOTS_INV - qtdItens;
 
-    for (let i = 0; i < qtdSlotsVazios; i++) {
-        let comida = comidasCompraveis.shift();
-        doubleClick(comida!);
+    await log(TipoLog.info, `Qtd Itens = ${qtdItens}`);
+    await log(TipoLog.info, `Qtd Slots Vazios = ${slotsVazios}`);
+
+    let dinheiroAtual = getDinheiroAtual();
+
+    let comprados = 0;
+    for (let i = 0; i < slotsVazios; i++) {
+        let comidaPreco = comidasCompraveisPreco.shift();
+        if (dinheiroAtual > comidaPreco?.price) {
+            doubleClick(comidaPreco?.item);
+            comprados++;
+        }
     }
+    await log(TipoLog.info, `Acabei de comprar ${comprados} drops`)
 });
 
-function getQtdSlotsVazios() {
-    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
+function getQtdItensInv(): number {
+    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="content"]/table/tbody/tr/td[2]/div[6]/div');
 
-    let items = Array.from(inventarioPlayer.children).filter(i => Object.keys((i as any).dataset).length > 0);
+    let items = Array.from(inventarioPlayer.children);
 
-    let qtdSlotsVazios = QTD_SLOTS_INV - items.length;
-    return qtdSlotsVazios;
+    return items.length;
+}
+
+function getDinheiroAtual(): number {
+    let element = getByXpath('//*[@id="sstat_gold_val"]')
+    return Number(element.textContent);
 }

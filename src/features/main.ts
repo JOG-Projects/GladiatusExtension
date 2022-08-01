@@ -1,6 +1,6 @@
 import { attackArena } from "./arena/controller/arena";
 import { attackCircus } from "./circus/controller/circus";
-import { checarHP } from "./cura/controller/cura";
+import { checarHP, comprarComida } from "./cura/controller/cura";
 import { pantheon } from "./pantheon/controller/pantheonController";
 
 export async function main(): Promise<void> {
@@ -10,6 +10,7 @@ export async function main(): Promise<void> {
 
 async function production(): Promise<void> {
     while (true) {
+        tentarChuparDrops();
         await attackArena();
         await attackCircus();
         await pantheon();
@@ -17,5 +18,15 @@ async function production(): Promise<void> {
 }
 
 async function test(): Promise<void> {
-    await checarHP();
+    await comprarComida();
+}
+
+function tentarChuparDrops() {
+    if (Math.floor(Math.random() * 1000) % 1000 == 0) {
+        chuparDrops();
+    }
+}
+
+function chuparDrops() {
+    alert("chupei um drops");
 }
