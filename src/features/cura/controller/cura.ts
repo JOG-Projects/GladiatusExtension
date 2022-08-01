@@ -1,6 +1,12 @@
 import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function checarHP(): Promise<void> {
+    let curarAtivado = getFromStorage("curar");
+    if (!curarAtivado) {
+        console.log("Cura desabilitada!!!");
+        return;
+    }
+
     let percentHP = await getHP();
 
     let percentHPMin = await getMinHP();

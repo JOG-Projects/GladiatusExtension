@@ -1,8 +1,14 @@
 import { getCurrentTarget, GetNext, waitAtkCooldown } from "../../ataque_utils";
 import { checarHP } from "../../cura/controller/cura";
-import { execute, setStorage, timeout } from "../../utils";
+import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function attackCircus(): Promise<void> {
+    let fazerCircus = await getFromStorage<boolean>("circus");
+    if (!fazerCircus) {
+        console.log("Circus desabilitado");
+        return;
+    }
+
     let target = await getCurrentTarget("currentCircusTarget");
 
     await waitAtkCooldown("getCircusCooldown", "circusCooldown");

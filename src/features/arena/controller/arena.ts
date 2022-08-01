@@ -1,8 +1,14 @@
 import { getCurrentTarget, GetNext, waitAtkCooldown } from "../../ataque_utils";
 import { checarHP } from "../../cura/controller/cura";
-import { execute, setStorage, timeout } from "../../utils";
+import { execute, getFromStorage, setStorage, timeout } from "../../utils";
 
 export async function attackArena(): Promise<void> {
+    let fazerArena = await getFromStorage<boolean>("arena");
+    if(!fazerArena) {
+        console.log("Arena desabilitada")
+        return;
+    }
+
     let target = await getCurrentTarget("currentArenaTarget");
 
     await waitAtkCooldown("getArenaCooldown", "arenaCooldown");
