@@ -1,3 +1,3 @@
-import { doWork, tryUntil, clickAndWait } from "../../utils";
+import { doWork, clickAndWait } from "../../utils";
 
-doWork("abrirVistaGeral", async () => clickAndWait('//*[@id="mainmenu"]/a[1]'));
+doWork("abrirVistaGeral", async () => clickAndWait('//*[@id="mainmenu"]/div[1]/a[1]'));

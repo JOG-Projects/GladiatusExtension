@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, getByXpath, log, tryUntil } from "../../utils";
+import { doubleClick, doWork, getByXpath, log } from "../../utils";
 
 const QTD_COLUNAS = 8;
 const QTD_LINHAS = 5;
@@ -10,54 +10,45 @@ doWork('comprarComida', async () => {
 
     let slotsVendedor = Array.from(inventarioVendedor.children);
 
-    await tryUntil(async () => {
-        // let comidasCompraveis = slotsVendedor.filter(x => {
-        //     let comida = x as any;
-        //     return comida.dataset.tooltip && !comida.dataset.tooltip.contains('icon_rubies')
-        // });
-    })
+    let comidasCompraveis = slotsVendedor.filter((item: any) => item.dataset.tooltip && !item.dataset.tooltip.includes('icon_rubies'))
 
-    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="inv"]');
+    let comidasCompraveisPreco = comidasCompraveis.map((itemCompravel: any) => {
+        return {
+            price: itemCompravel.dataset.priceGold,
+            item: itemCompravel
+        }
+    });
 
-    let items = Array.from(inventarioPlayer.children).filter(i => Object.keys((i as any).dataset).length > 0);
+    await log(TipoLog.info, `Comidas compraveis: ${comidasCompraveis.length}`)
 
-    let qtdSlotsVazios = QTD_SLOTS_INV - items.length;
+    let qtdItens = getQtdItensInv();
+    let slotsVazios = QTD_SLOTS_INV - qtdItens;
 
-    await log(TipoLog.info, `QtdItens = ${qtdSlotsVazios}`);
-    await log(TipoLog.info, `Slots Vazios = ${qtdSlotsVazios}`);
-    //trigger_drop(banana, cuzeta);
-})
+    await log(TipoLog.info, `Qtd Itens = ${qtdItens}`);
+    await log(TipoLog.info, `Qtd Slots Vazios = ${slotsVazios}`);
 
+    let dinheiroAtual = getDinheiroAtual();
+    await log(TipoLog.info, `Dinheiro atual: ${dinheiroAtual}`);
 
-// function trigger_drop(item: Element, localizacao: Element) {
-//     console.log("tentando arrastar...")
-//     let draggable = item.draggable();
-//     let droppable = localizacao.droppable();
-
-//     let droppableOffset = droppable.offset();
-//     let draggableOffset = draggable.offset();
-//     let dx = droppableOffset.left - draggableOffset.left;
-//     let dy = droppableOffset.top - draggableOffset.top;
-
-//     draggable.simulate("drag", { dx: dx, dy: dy });
-
-//     console.log("arrastei...")
-// }
-
-function buyFood(matrix: boolean[][], comidasCompraveis: Element[]) {
-    for (let x = 0; x < 5; x++) {
-        for (let y = 0; y < 8; y++) {
-            if (!matrix[x][y]) {
-
-                //arrastar a primeira comida compravel para a matrix[y][x]
-
-                matrix[x][y] = true;
-            }
+    let comprados = 0;
+    for (let i = 0; i < slotsVazios; i++) {
+        let comidaPreco = comidasCompraveisPreco.shift();
+        await log(TipoLog.info, `Preco: ${comidaPreco?.price}`)
+        if (dinheiroAtual > Number(comidaPreco?.price)) {
+            doubleClick(comidaPreco?.item);
+            comprados++;
         }
     }
+    await log(TipoLog.info, `Acabei de comprar ${comprados} drops`)
+});
+
+function getQtdItensInv(): number {
+    let inventarioPlayer = getByXpath<HTMLElement>('//*[@id="content"]/table/tbody/tr/td[2]/div[6]/div');
+
+    return inventarioPlayer.children.length;
 }
 
-function verifySlot(x: number, y: number, el: Element) {
-    let element = el as any;
-    return element.dataset.positionX == x && element.dataset.positionY == y;
+function getDinheiroAtual(): number {
+    let element = getByXpath('//*[@id="sstat_gold_val"]')
+    return Number(element.textContent?.replace(".", ""));
 }

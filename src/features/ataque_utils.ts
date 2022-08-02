@@ -16,9 +16,9 @@ export async function getCurrentTarget(mode: string): Promise<{ current: string,
 
 export async function getAtkCooldown(xpath: string, key: string) {
     let elemento = getByXpath<HTMLElement>(xpath);
-    let textCooldown = elemento.innerHTML;
+    let textCooldown = elemento.textContent;
 
-    let timeSegments = textCooldown.split(":");
+    let timeSegments = textCooldown!.split(":");
 
     let hours = Number(timeSegments[0] ?? 0);
     let minutes = Number(timeSegments[1] ?? 0);

@@ -1,12 +1,8 @@
-import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, tryUntil, log, setStorage } from "../../utils";
+import { doWork, setStorage, getByXpath } from "../../utils";
 
 doWork("obterQtdComidaInv", async () => getQntComida());
 
 async function getQntComida(): Promise<void> {
-    let elemento = document.getElementById('inv') as HTMLElement;
-    let qtdComida = elemento.children.length;
-    await log(TipoLog.info, `Quantidade comida no inventario: ${qtdComida}`)
-
-    await setStorage('qtdComidaInv', qtdComida);
+    let inventario = getByXpath<HTMLElement>('//*[@id="content"]/table/tbody/tr/td[2]/div[6]/div');
+    await setStorage('qtdComidaInv', inventario.children.length);
 }
