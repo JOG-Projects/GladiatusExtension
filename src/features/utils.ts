@@ -2,13 +2,14 @@ import { IMessage } from "../model/infra/IMessage";
 import { Indexable } from "../model/infra/Indexable";
 import { TipoLog } from "../model/infra/tipoLog";
 
-export async function tryUntil(action: () => Promise<void>): Promise<void> {
+export async function tryUntil<T>(action: () => Promise<T>): Promise<T | null> {
     try {
-        await action();
+        return await action();
     } catch (e: any) {
         await log(TipoLog.erro, e.message)
         await timeout(200);
         await tryUntil(action);
+        return null;
     }
 }
 
@@ -88,6 +89,15 @@ export async function registerListeners(elements: { id: string, default: any, va
     }
 }
 
+export function doubleClick(comida: Element) {
+    const dbClickEvent = new MouseEvent('dblclick', {
+        bubbles: true,
+        cancelable: false
+    });
+
+    comida.dispatchEvent(dbClickEvent);
+}
+
 async function promisifyExecute(messageCallback: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {
@@ -99,4 +109,25 @@ async function promisifyExecute(messageCallback: string) {
         chrome.runtime.onMessage.addListener(listener);
     }
     );
+}
+
+export function gerarDrops(): string {
+    let lut: string[] = [];
+    for (var i = 0; i < 256; i++) {
+        lut[i] = (i < 16 ? '0' : '') + (i).toString(16);
+    }
+
+    function e7() {
+        var d0 = Math.random() * 0xffffffff | 0;
+        var d1 = Math.random() * 0xffffffff | 0;
+        var d2 = Math.random() * 0xffffffff | 0;
+        var d3 = Math.random() * 0xffffffff | 0;
+
+        return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +
+            lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +
+            lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + '-' + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
+            lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
+    }
+
+    return e7();
 }
