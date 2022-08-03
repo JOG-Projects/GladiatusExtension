@@ -1,7 +1,7 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
 import { doWork, getByXpath, log, setStorage, timeout, tryUntil } from "../../utils";
 
-doWork("verificarMissoes", async () => obterNumeroMissoes());
+doWork(async () => obterNumeroMissoes());
 
 async function obterNumeroMissoes(): Promise<void> {
     let elemento = getByXpath('//*[@id="quest_header_accepted"]');
