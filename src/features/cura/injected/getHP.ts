@@ -1,7 +1,7 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { getByXpath, setStorage, log, doWork2 } from "../../utils";
+import { getByXpath, setStorage, log, doWork } from "../../utils";
 
-doWork2(async () => await getHP());
+doWork(async () => await getHP());
 
 async function getHP() {
     let elemento = getByXpath<HTMLElement>('//*[@id="header_values_hp_percent"]');

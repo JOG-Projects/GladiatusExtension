@@ -70,7 +70,7 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function doWork(sexo: string, work: () => Promise<void>) {
+export async function doWorkLegado(sexo: string, work: () => Promise<void>) {
     (async () => {
         try {
             await tryUntil(work);
@@ -104,7 +104,7 @@ export function doubleClick(comida: Element) {
     comida.dispatchEvent(dbClickEvent);
 }
 
-export function doWork2(work: () => Promise<void>) {
+export function doWork(work: () => Promise<void>) {
     (async () => {
         try {
             await work();
