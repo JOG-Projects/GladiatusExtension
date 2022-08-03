@@ -1,6 +1,6 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
 import { getCurrentTarget } from "../../ataque_utils";
-import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../utils";
+import { clickAndWait, doWork, getByXpath, getFromStorage, log } from "../../utils";
 
 doWork(async () => {
     await setPlayerName()
