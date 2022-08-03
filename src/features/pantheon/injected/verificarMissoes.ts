@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, getByXpath, log, setStorage, timeout, tryUntil } from "../../utils";
+import { doWork, getByXpath, log, setStorage } from "../../utils";
 
 doWork(async () => obterNumeroMissoes());
 

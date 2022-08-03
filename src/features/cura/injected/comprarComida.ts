@@ -5,7 +5,7 @@ const QTD_COLUNAS = 8;
 const QTD_LINHAS = 5;
 const QTD_SLOTS_INV = QTD_COLUNAS * QTD_LINHAS;
 
-doWork('comprarComida', async () => {
+doWork(async () => {
     let inventarioVendedor = getByXpath<HTMLElement>('//*[@id="shop"]');
 
     let slotsVendedor = Array.from(inventarioVendedor.children);
