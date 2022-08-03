@@ -13,10 +13,17 @@ export async function tryUntil<T>(action: () => Promise<T>): Promise<T> {
 }
 
 export async function execute(file: string): Promise<void> {
-    var tabId = await getFromStorage<number>("tabId");
-    let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
-    chrome.tabs.executeScript(tabId, details);
-    await promisifyExecute(file);
+    while (true) {
+        let tabId = await getFromStorage<number>("tabId");
+        let details: chrome.tabs.InjectDetails = { file: `${file}.js` };
+        await new Promise<any[]>(resolve => chrome.tabs.executeScript(tabId, details, resolve));
+
+        if ((await getFromStorage<boolean>("result")) === true) {
+            return;
+        }
+        
+        await timeout(200);
+    }
 }
 
 export async function getFromStorage<T>(key: string): Promise<T> {
@@ -63,15 +70,14 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function doWork(file: string, work: () => Promise<void>) {
-    try {
-        await tryUntil(work);
-    } catch (e) {
-        await logError(e);
-    }
-    finally {
-        await resolvePromise(file);
-    }
+export async function doWork(sexo: string, work: () => Promise<void>) {
+    (async () => {
+        try {
+            await tryUntil(work);
+        } catch (e) {
+            await logError(e);
+        }
+    })();
 }
 
 export async function resolvePromise(file: string) {
@@ -98,6 +104,18 @@ export function doubleClick(comida: Element) {
     comida.dispatchEvent(dbClickEvent);
 }
 
+export function doWork2(work: () => Promise<void>) {
+    (async () => {
+        try {
+            await work();
+            await setStorage("result", true)
+        } catch (e: any) {
+            await log(TipoLog.erro, e.message);
+            await setStorage("result", false);
+        }
+    })();
+}
+
 async function promisifyExecute(messageCallback: string) {
     await new Promise<void>(resolve => {
         let listener = async (message: { type: string }) => {
@@ -113,15 +131,15 @@ async function promisifyExecute(messageCallback: string) {
 
 export function gerarDrops(): string {
     let lut: string[] = [];
-    for (var i = 0; i < 256; i++) {
+    for (let i = 0; i < 256; i++) {
         lut[i] = (i < 16 ? '0' : '') + (i).toString(16);
     }
 
     function e7() {
-        var d0 = Math.random() * 0xffffffff | 0;
-        var d1 = Math.random() * 0xffffffff | 0;
-        var d2 = Math.random() * 0xffffffff | 0;
-        var d3 = Math.random() * 0xffffffff | 0;
+        let d0 = Math.random() * 0xffffffff | 0;
+        let d1 = Math.random() * 0xffffffff | 0;
+        let d2 = Math.random() * 0xffffffff | 0;
+        let d3 = Math.random() * 0xffffffff | 0;
 
         return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +
             lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +

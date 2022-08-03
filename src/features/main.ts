@@ -2,7 +2,7 @@ import { attackArena } from "./arena/controller/arena";
 import { attackCircus } from "./circus/controller/circus";
 import { checarHP, comprarComida } from "./cura/controller/cura";
 import { pantheon } from "./pantheon/controller/pantheonController";
-import { gerarDrops, getFromStorage, setStorage, timeout } from "./utils";
+import { gerarDrops, getFromStorage, setStorage } from "./utils";
 
 export async function main(): Promise<void> {
     // await production();

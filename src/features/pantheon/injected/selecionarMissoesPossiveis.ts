@@ -19,7 +19,7 @@ async function selecionarMissoesPossiveis(): Promise<void> {
 }
 
 function getAvailableMission(missoes: Element[]) {
-    var divAvailableMission = missoes.find(availableMission)?.children!;
+    let divAvailableMission = missoes.find(availableMission)?.children!;
     return Array.from(divAvailableMission)
         .find(x => x.className
             .includes('quest_slot_button quest_slot_button_accept')) as HTMLButtonElement;
