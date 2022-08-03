@@ -5,7 +5,7 @@ import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from 
 doWork("atacarCircus", async () => {
     await tryUntil(async() => setPlayerName());
     await log(TipoLog.info, "Nome inserido")
-    await tryUntil(async () => clickAndWait('//*[@id="content"]/article/section[2]/form/p[2]/input[2]'));
+    await tryUntil(async () => clickAndWait('//*[@id="content"]/article/section[1]/form/p[2]/input[2]'));
 });
 
 async function setPlayerName(): Promise<void> {

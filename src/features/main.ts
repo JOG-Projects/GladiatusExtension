@@ -5,7 +5,7 @@ import { pantheon } from "./pantheon/controller/pantheonController";
 import { gerarDrops, getFromStorage, setStorage, timeout } from "./utils";
 
 export async function main(): Promise<void> {
-    //await production();
+    // await production();
     await test();
 }
 

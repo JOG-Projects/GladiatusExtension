@@ -49,6 +49,7 @@ async function curarHPMinimo(): Promise<void> {
     let hp = await getHP();
 
     while (hp < minHP) {
+        console.log('estou sem vida ainda... vou me curar ein...')
         await execute('curar');
         await timeout(3000);
 

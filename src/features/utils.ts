@@ -2,14 +2,13 @@ import { IMessage } from "../model/infra/IMessage";
 import { Indexable } from "../model/infra/Indexable";
 import { TipoLog } from "../model/infra/tipoLog";
 
-export async function tryUntil<T>(action: () => Promise<T>): Promise<T | null> {
+export async function tryUntil<T>(action: () => Promise<T>): Promise<T> {
     try {
         return await action();
     } catch (e: any) {
         await log(TipoLog.erro, e.message)
         await timeout(200);
-        await tryUntil(action);
-        return null;
+        return await tryUntil(action);
     }
 }
 
@@ -81,6 +80,7 @@ export async function resolvePromise(file: string) {
 
 export async function registerListeners(elements: { id: string, default: any, value: string }[]) {
     for (let element of elements) {
+        await log(TipoLog.info, `id:${element.id} value:${element.value} default:${element.default}`)
         let html = document.getElementById(element.id) as Indexable;
         let newValue = (await getFromStorage<any>(element.id)) ?? element.default;
         html.onchange = async () => await setStorage(element.id, html[element.value])
