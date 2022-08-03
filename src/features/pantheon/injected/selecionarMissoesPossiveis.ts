@@ -1,9 +1,7 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doWork, log, timeout, tryUntil } from "../../utils";
+import { doWork, log, timeout } from "../../utils";
 
-doWork("selecionarMissoesPossiveis", async () => {
-    await tryUntil(async () => selecionarMissoesPossiveis());
-});
+doWork(async () => selecionarMissoesPossiveis());
 
 async function selecionarMissoesPossiveis(): Promise<void> {
     let elemento = document.getElementsByClassName('contentboard_start') as HTMLCollection;

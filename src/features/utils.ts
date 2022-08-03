@@ -2,16 +2,6 @@ import { IMessage } from "../model/infra/IMessage";
 import { Indexable } from "../model/infra/Indexable";
 import { TipoLog } from "../model/infra/tipoLog";
 
-export async function tryUntil<T>(action: () => Promise<T>): Promise<T> {
-    try {
-        return await action();
-    } catch (e: any) {
-        await log(TipoLog.erro, e.message)
-        await timeout(200);
-        return await tryUntil(action);
-    }
-}
-
 export async function execute(file: string): Promise<void> {
     while (true) {
         let tabId = await getFromStorage<number>("tabId");
@@ -70,16 +60,6 @@ export async function logError(e: any): Promise<void> {
     await log(TipoLog.erro, `${e}`)
 }
 
-export async function doWorkLegado(sexo: string, work: () => Promise<void>) {
-    (async () => {
-        try {
-            await tryUntil(work);
-        } catch (e) {
-            await logError(e);
-        }
-    })();
-}
-
 export async function resolvePromise(file: string) {
     await chrome.runtime.sendMessage({ type: file });
 }
@@ -114,19 +94,6 @@ export function doWork(work: () => Promise<void>) {
             await setStorage("result", false);
         }
     })();
-}
-
-async function promisifyExecute(messageCallback: string) {
-    await new Promise<void>(resolve => {
-        let listener = async (message: { type: string }) => {
-            if (message.type === messageCallback) {
-                chrome.runtime.onMessage.removeListener(listener);
-                resolve();
-            }
-        }
-        chrome.runtime.onMessage.addListener(listener);
-    }
-    );
 }
 
 export function gerarDrops(): string {
