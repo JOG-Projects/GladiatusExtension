@@ -1,8 +1,8 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doubleClick, doWork, getByXpath, log, setStorage, tryUntil } from "../../utils";
+import { doubleClick, doWork, getByXpath, log, setStorage } from "../../utils";
 
 doWork(async () => {
-    let comidas = await tryUntil(getInventoryFoods)
+    let comidas = await getInventoryFoods();
     await log(TipoLog.info, "Peguei as comidinhas");
     let qtdComidas = comidas?.length ?? 0;
 
