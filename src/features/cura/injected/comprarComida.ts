@@ -1,5 +1,5 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
-import { doubleClick, doWork, getByXpath, log } from "../../utils";
+import { doubleClick, doWork, getByXpath, log, timeout } from "../../utils";
 
 const QTD_COLUNAS = 8;
 const QTD_LINHAS = 5;
@@ -33,11 +33,11 @@ doWork('comprarComida', async () => {
     let comprados = 0;
     for (let i = 0; i < slotsVazios; i++) {
         let comidaPreco = comidasCompraveisPreco.shift();
-        await log(TipoLog.info, `Preco: ${comidaPreco?.price}`)
-        if (dinheiroAtual > Number(comidaPreco?.price)) {
+        if (getDinheiroAtual() > Number(comidaPreco?.price)) {
             doubleClick(comidaPreco?.item);
             comprados++;
         }
+        await timeout(500);
     }
     await log(TipoLog.info, `Acabei de comprar ${comprados} drops`)
 });
