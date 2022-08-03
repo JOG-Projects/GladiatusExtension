@@ -1,3 +1,3 @@
 import { doWork, tryUntil, clickAndWait } from "../../utils";
 
-doWork("abrirArena", async () => clickAndWait('//*[@id="cooldown_bar_arena"]/a'));
+doWork(async () => clickAndWait('//*[@id="cooldown_bar_arena"]/a'));

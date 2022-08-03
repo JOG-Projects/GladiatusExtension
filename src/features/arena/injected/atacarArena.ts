@@ -2,10 +2,10 @@ import { TipoLog } from "../../../model/infra/tipoLog";
 import { getCurrentTarget } from "../../ataque_utils";
 import { clickAndWait, doWork, getByXpath, getFromStorage, log, tryUntil } from "../../utils";
 
-doWork("atacarArena", async () => {
-    await tryUntil(setPlayerName);
+doWork(async () => {
+    await setPlayerName()
     await log(TipoLog.info, "Nome inserido")
-    await tryUntil(async () => clickAndWait('//*[@id="content"]/article/section[1]/form/p[2]/input[2]'));
+    clickAndWait('//*[@id="content"]/article/section[1]/form/p[2]/input[2]');
 });
 
 async function setPlayerName(): Promise<void> {
