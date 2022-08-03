@@ -5,7 +5,7 @@ import { clickAndWait, doWork, getByXpath, getFromStorage, log } from "../../uti
 doWork(async () => {
     await setPlayerName();
     await log(TipoLog.info, "Nome inserido")
-    clickAndWait('//*[@id="content"]/article/section[1]/form/p[2]/input[2]');
+    clickAndWait('//*[@id="content"]/article/section[2]/form/p[2]/input[2]');
 });
 
 async function setPlayerName(): Promise<void> {

@@ -17,7 +17,7 @@ export async function execute(file: string): Promise<void> {
 }
 
 export async function getFromStorage<T>(key: string): Promise<T> {
-    let value = await new Promise<any>(resolve => chrome.storage.sync.get(key, value => resolve(value)))
+    let value = await new Promise<any>(resolve => chrome.storage.local.get(key, value => resolve(value)))
     return value[key] as T
 }
 
@@ -25,7 +25,7 @@ export async function setStorage(key: string, value: any): Promise<void> {
     let obj = {} as IMessage
     obj[key] = value
 
-    await chrome.storage.sync.set(obj)
+    await chrome.storage.local.set(obj)
 }
 
 export async function timeout(ms: number): Promise<void> {
@@ -66,7 +66,6 @@ export async function resolvePromise(file: string) {
 
 export async function registerListeners(elements: { id: string, default: any, value: string }[]) {
     for (let element of elements) {
-        await log(TipoLog.info, `id:${element.id} value:${element.value} default:${element.default}`)
         let html = document.getElementById(element.id) as Indexable;
         let newValue = (await getFromStorage<any>(element.id)) ?? element.default;
         html.onchange = async () => await setStorage(element.id, html[element.value])

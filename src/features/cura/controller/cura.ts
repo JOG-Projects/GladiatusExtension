@@ -1,29 +1,14 @@
-import { execute, getFromStorage, setStorage, timeout } from "../../utils";
+import { execute, getFromStorage, timeout } from "../../utils";
 
 export async function checarHP(): Promise<void> {
-    let curarAtivado = getFromStorage<boolean>("curar");
+    let curarAtivado = await getFromStorage<boolean>("curar");
     if (!curarAtivado) {
         console.log("Cura desabilitada!!!");
         return;
     }
+    await checkComprarComida();
 
-    let percentHP = await getHP();
-
-    let percentHPMin = await getMinHP();
-
-    console.log(`HP atual: ${percentHP}`)
-    console.log(`HP min: ${percentHPMin}`)
-
-    if (percentHP > percentHPMin) {
-        console.log('Não preciso me curar')
-        return;
-    }
-
-    console.log('Preciso me curar')
     await curarHPMinimo();
-
-    console.log('Preciso comprar cura')
-    await comprarComida();
 }
 
 async function getMinHP(): Promise<number> {
@@ -48,23 +33,38 @@ async function curarHPMinimo(): Promise<void> {
     let minHP = await getMinHP();
     let hp = await getHP();
 
-    while (hp < minHP) {
-        console.log('estou sem vida ainda... vou me curar ein...')
-        await execute('curar');
-        await timeout(3000);
+    while (true) {
+        console.log(`HP atual: ${hp}`)
+        console.log(`HP min: ${minHP}`)
 
-        let qtdComidas = await getFromStorage("qtdComidasInv")
-        console.log(`qtd comidas ${qtdComidas}`)
-        if (qtdComidas == 0) {
-            console.log("Acabou as comidas!!!");
+        if (hp > minHP) {
+            console.log('Não preciso me curar')
             return;
         }
 
-        hp = await getHP();
+        let qtdComidas = await obterQtdComidaInv();
+        console.log(`qtd comidas ${qtdComidas}`);
+
+        if (qtdComidas == 0) {
+            console.log("Acabou as comidas!!!");
+            await comprarComida();
+        }
+
+        console.log('Preciso me curar')
+
+        hp = await usarItemCura();
+
     }
 }
 
-export async function comprarComida() {
+async function usarItemCura() {
+    await execute('curar');
+    await timeout(3000);
+    console.log("Me curei")
+    return await getHP();
+}
+
+export async function checkComprarComida() {
     console.log("vou abrir os bens gerais")
     await execute('abrirBensGerais');
 
@@ -84,10 +84,29 @@ export async function comprarComida() {
         return;
     }
 
-    console.log("vou comprar comida")
-    await execute('comprarComida');
-    await timeout(3000);
+    console.log('Preciso comprar cura')
+    await comprarComida();
 }
 
+async function comprarComida() {
+    console.log("vou comprar comida");
 
+    await execute('getSlotsVazios');
+    let slotsVazios = await getFromStorage<number>('slotsVazios');
+    console.log(`Slots vazios: ${slotsVazios}`);
 
+    for (let i = 0; i < slotsVazios; i++) {
+        await execute('comprarComida');
+        let comprou = await getFromStorage<boolean>('curaComprada');
+
+        if (!comprou) {
+            console.log(`SEM COMIDAS PARA COMPRAR!!!`);
+            return;
+        }
+
+        await timeout(500);
+    }
+
+    await timeout(2000);
+    console.log("comprei comida");
+}

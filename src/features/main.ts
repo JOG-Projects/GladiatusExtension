@@ -1,12 +1,11 @@
 import { attackArena } from "./arena/controller/arena";
 import { attackCircus } from "./circus/controller/circus";
-import { checarHP, comprarComida } from "./cura/controller/cura";
 import { pantheon } from "./pantheon/controller/pantheonController";
 import { gerarDrops, getFromStorage, setStorage } from "./utils";
 
 export async function main(): Promise<void> {
-    // await production();
-    await test();
+    await production();
+    //await test();
 }
 
 async function production(): Promise<void> {
@@ -15,7 +14,7 @@ async function production(): Promise<void> {
     console.log(`Iniciando processo: ${dropsId}`);
 
     while (true) {
-        tentarChuparDrops();
+        await tentarChuparDrops();
         let clone = await souClone(dropsId);
         if(clone) {
             console.log(`Matando processo: ${dropsId}`);
@@ -29,10 +28,15 @@ async function production(): Promise<void> {
 }
 
 async function test(): Promise<void> {
-    await checarHP();
+    await attackCircus();
 }
 
-function tentarChuparDrops() {
+async function tentarChuparDrops() {
+    if(await getFromStorage<boolean>('arena') !== true)
+    {
+        return;
+    }
+
     if (Math.floor(Math.random() * 1000) % 1000 == 0) {
         chuparDrops();
     }

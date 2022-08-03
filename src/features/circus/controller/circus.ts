@@ -15,10 +15,9 @@ export async function attackCircus(): Promise<void> {
 
     console.log("Abrindo circus");
     await execute('abrirCircus');
-    await timeout(1000);
+    await timeout(3000);
 
     console.log(`Atacando (Circus) jogador: ${target.current}`);
-    await timeout(1000)
     await execute('atacarCircus');
 
     await setStorage("currentCircusTarget", GetNext(target.players, target.current));

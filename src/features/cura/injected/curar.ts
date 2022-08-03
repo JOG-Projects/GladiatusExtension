@@ -1,5 +1,6 @@
 import { TipoLog } from "../../../model/infra/tipoLog";
 import { doubleClick, doWork, getByXpath, log, setStorage } from "../../utils";
+import { getInventoryFoods } from "../cura_utils";
 
 doWork(async () => {
     let comidas = await getInventoryFoods();
@@ -16,11 +17,3 @@ doWork(async () => {
 
     await log(TipoLog.info, "Me curei");
 });
-
-async function getInventoryFoods(): Promise<HTMLCollection> {
-    await log(TipoLog.info, 'Vou achar o inventorio...')
-    let inventario = getByXpath<HTMLElement>('//*[@id="inv"]')
-    await log(TipoLog.info, 'Achei o inventorio...')
-    // let comidas = Array.from(inventario.children).filter((i: any) => i.dataset.tooltip);
-    return inventario.children;
-}
